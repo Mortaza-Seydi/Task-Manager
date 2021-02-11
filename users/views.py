@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 def index(request):
     if request.user.is_authenticated:
-        print("wowo")
+        return redirect('boards')
     else:
         return redirect('signIn')
 
@@ -16,7 +16,7 @@ def index(request):
 class SignIn(View):
     def get(self, request):
         if request.user.is_authenticated:
-            print("wOWOW")
+            return redirect('boards')
         else:
             return render(request, 'auth.html')
 
@@ -26,9 +26,7 @@ class SignIn(View):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # return redirect('/some/url/')
-            print("eoe")
-            return
+            return redirect('boards')
 
         else:
             response = JsonResponse({"error": "Invalid Credential"})
@@ -46,4 +44,4 @@ class SignUp(View):
         user.save()
         login(request, user)
 
-
+        return redirect('boards')
