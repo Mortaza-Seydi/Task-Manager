@@ -35,13 +35,24 @@ class SignIn(View):
 
 
 class SignUp(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('boards')
+        else:
+            return redirect('signIn')
+
     def post(self, request):
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
+        try:
+            username = request.POST['username']
+            email = request.POST['email']
+            password = request.POST['password']
 
-        user = User.objects.create_user(username, email, password)
-        user.save()
-        login(request, user)
+            user = User.objects.create_user(username, email, password)
+            user.save()
 
-        return redirect('boards')
+            return redirect('boards')
+
+        except:
+            response = JsonResponse({"error": "Duplicate User or Server error"})
+            response.status_code = 403
+            return response
