@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.models import User
 from django.db.models import Q
+from .models import Board, Task, Project
 
 
 class Boards(View):
@@ -10,7 +11,8 @@ class Boards(View):
             user = request.user
             data = {"user": user,
                     "first": user.username[0],
-                    "other_users": User.objects.filter(~Q(username=user.username)).all()
+                    "other_users": User.objects.filter(~Q(username=user.username)).all(),
+                    "projects": Project.objects.filter(owner_id=user.id),
                     }
             return render(request, 'boards.html', data)
         else:
@@ -21,11 +23,21 @@ class Boards(View):
             return redirect('signIn')
 
         else:
+            print(request.POST)
             name = request.POST['name']
-            description = request.POST['description']
+            description = request.POST['desc']
             details = request.POST['details']
-            owner = request.user.id
-            user_ids = request.POST['user_ids']
+            owner = request.user
+            user_ids = request.POST.getlist('users', [])
 
-            print(name, description, details, owner, user_ids)
-            # members = models.ForeignKey(Board, on_delete=models.CASCADE)
+            print(name, details, description, owner, user_ids)
+
+            br = Board()
+            br.save()
+            for id in user_ids:
+                br.members.add(id)
+
+            proj = Project(name=name, description=description, details=details, owner=owner, members=br)
+            proj.save()
+
+            return redirect('boards')
