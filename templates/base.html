@@ -1,4 +1,4 @@
-{%  load static %}
+{% load static %}
 
 <!DOCTYPE html>
 
@@ -20,7 +20,9 @@
 
     <!--begin::Global Theme Styles(used by all pages)-->
     <link href="{% static '/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'plugins/custom/prismjs/prismjs.bundle.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static '/css/style.bundle.css' %}" rel="stylesheet" type="text/css"/>
+
     <!--end::Global Theme Styles-->
 
     <link rel="shortcut icon" href="{% static '/media/logos/favicon.ico' %}"/>
@@ -30,11 +32,12 @@
 <body id="kt_body" style="background-image: url({% static '/media/bg/bg-10.jpg' %})"
       class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading">
 
-{%  block content %}
+{% block content %}
 {% endblock %}
 
 <!--begin::Global Config(global config for global JS scripts)-->
-<script>var KTAppSettings = {"breakpoints": {"sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200},
+<script>var KTAppSettings = {
+    "breakpoints": {"sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200},
     "colors": {
         "theme": {
             "base": {
@@ -89,11 +92,15 @@
 
 <!--begin::Global Theme Bundle(used by all pages)-->
 <script src="{% static '/plugins/global/plugins.bundle.js' %}"></script>
+<script src="{% static '/plugins/custom/prismjs/prismjs.bundle.js' %}"></script>
 <script src="{% static '/js/scripts.bundle.js' %}"></script>
-<!--end::Global Theme Bundle-->
+<!--
+end::Global
+Theme
+Bundle-->
 
 {% block js %}{% endblock %}
 
-</body>
+< /body>
 <!--end::Body-->
-</html>
+< /html>
