@@ -9,9 +9,11 @@ class Project(models.Model):
     details = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     members = models.CharField(max_length=500)
+    profile_photo = models.CharField(max_length=200, default='/static/media/project-logos/1.png')
 
     def get_members(self):
         return json.loads(self.members)
+
 
 class Task(models.Model):
     name = models.CharField(max_length=50)

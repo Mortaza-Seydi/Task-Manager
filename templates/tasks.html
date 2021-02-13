@@ -1,4 +1,4 @@
-{% extends 'boards.html' %}
+{% extends 'projects.html' %}
 {% load static %}
 
 {% block title %}Tasks{% endblock %}
@@ -164,11 +164,7 @@
 {% block js %}
     <script src="{% static '/plugins/custom/kanban/kanban.bundle.js' %}"></script>
     <script src="{% static '/plugins/custom/fullcalendar/fullcalendar.bundle.js' %}"></script>
-    <script src="{% static '/js/pages/features/calendar/basic.js' %}"></script>
     <script src="{% static '/js/pages/my-script.js' %}"></script>
-    {#    <script src="{% static '/js/pages/crud/forms/widgets/bootstrap-datepicker.js' %}"></script>#}
-
-    {#    <script src="{% static '/js/pages/features/miscellaneous/kanban-board.js' %}"></script>#}
 
     <script>
         "use strict";
@@ -352,9 +348,85 @@
             };
         }();
 
+        var KTCalendarBasic = function () {
+
+            return {
+                //main function to initiate the module
+                init: function () {
+                    var todayDate = moment().startOf('day');
+                    var YM = todayDate.format('YYYY-MM');
+                    var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
+                    var TODAY = todayDate.format('YYYY-MM-DD');
+                    var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+
+                    var calendarEl = document.getElementById('kt_calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        plugins: ['bootstrap', 'interaction', 'dayGrid', 'timeGrid', 'list'],
+                        themeSystem: 'bootstrap',
+
+                        isRTL: KTUtil.isRTL(),
+
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        },
+
+                        height: 800,
+                        contentHeight: 780,
+                        aspectRatio: 3,  // see: https://fullcalendar.io/docs/aspectRatio
+
+                        nowIndicator: true,
+                        {#now: TODAY + 'T09:25:00', // just for demo#}
+
+                        views: {
+                            dayGridMonth: {buttonText: 'month'},
+                            timeGridWeek: {buttonText: 'week'},
+                            timeGridDay: {buttonText: 'day'}
+                        },
+
+                        defaultView: 'dayGridMonth',
+                        defaultDate: TODAY,
+
+                        editable: false,
+                        eventLimit: true, // allow "more" link when too many events
+                        navLinks: true,
+                        events: [
+                            {% for t in tasks %}
+                                {
+                                    title: '{{t.name}}',
+                                    start: new Date('{{ t.end_time }}'),
+                                    description: '{{t.description}}',
+                                    className: "fc-event-light fc-event-solid-primary"
+                                },
+                            {% endfor %}
+                        ],
+
+                        eventRender: function (info) {
+                            var element = $(info.el);
+
+                            if (info.event.extendedProps && info.event.extendedProps.description) {
+                                if (element.hasClass('fc-day-grid-event')) {
+                                    element.data('content', info.event.extendedProps.description);
+                                    element.data('placement', 'top');
+                                    KTApp.initPopover(element);
+                                } else if (element.hasClass('fc-time-grid-event')) {
+                                    element.find('.fc-title').append('<div class="fc-description">' + info.event.extendedProps.description + '</div>');
+                                } else if (element.find('.fc-list-item-title').lenght !== 0) {
+                                    element.find('.fc-list-item-title').append('<div class="fc-description">' + info.event.extendedProps.description + '</div>');
+                                }
+                            }
+                        }
+                    });
+
+                    calendar.render();
+                }
+            };
+        }();
+
         jQuery(document).ready(function () {
             KTKanbanBoardDemo.init();
-
+            KTCalendarBasic.init();
         });
 
     </script>

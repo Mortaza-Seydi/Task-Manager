@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Task, Project
 from django.http import JsonResponse
-import json
+import json, random
 
 
-class Boards(View):
+class Projects(View):
     def get(self, request):
         if not request.user.is_authenticated:
             return redirect('signIn')
@@ -23,9 +23,9 @@ class Boards(View):
         data = {"user": user,
                 "first": user.username[0],
                 "other_users": User.objects.filter(~Q(username=user.username)).all(),
-                "projects": list
+                "projects": list,
                 }
-        return render(request, 'boards.html', data)
+        return render(request, 'projects.html', data)
 
     def post(self, request):
         if not request.user.is_authenticated:
@@ -41,8 +41,11 @@ class Boards(View):
         for id in user_ids:
             ids.append(int(id))
 
+        n = random.randint(1, 7)
+        pf_url = f'/media/project-logos/{n}.png'
+
         proj = Project.objects.create(name=name, description=description, details=details, owner=owner,
-                                      members=json.dumps(ids))
+                                      members=json.dumps(ids), profile_photo=pf_url)
         proj.save()
 
         return redirect('boards')

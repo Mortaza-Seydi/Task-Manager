@@ -40,7 +40,7 @@ var KTCalendarBasic = function() {
                 defaultView: 'dayGridMonth',
                 defaultDate: TODAY,
 
-                editable: true,
+                editable: false,
                 eventLimit: true, // allow "more" link when too many events
                 navLinks: true,
                 events: [

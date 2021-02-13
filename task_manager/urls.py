@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import Boards, Tasks, ManegeTasks
+from .views import Projects, Tasks, ManegeTasks
 
 urlpatterns = [
-    path('', Boards.as_view(), name='boards'),
+    path('', Projects.as_view(), name='boards'),
     path('<id>', Tasks.as_view(), name='tasks'),
     path('<id>/task', ManegeTasks.as_view())
 ]

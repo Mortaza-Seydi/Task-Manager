@@ -79,7 +79,7 @@
                                     <!--begin::Heading-->
                                     <div class="d-flex flex-column">
                                         <!--begin::Title-->
-                                        <h2 class="text-white font-weight-bold my-2 mr-5">Boards</h2>
+                                        <h2 class="text-white font-weight-bold my-2 mr-5">Projects / Teams</h2>
                                         <!--end::Title-->
                                     </div>
                                     <!--end::Heading-->
@@ -193,7 +193,7 @@
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Pic-->
                                                 <div class="flex-shrink-0 mr-4 symbol symbol-60 symbol-circle">
-                                                    <img src="{% static '/media/project-logos/3.png' %}"
+                                                    <img src="/static{{ proj.profile_photo }}"
                                                          alt="image"/>
                                                 </div>
                                                 <!--end::Pic-->
@@ -240,18 +240,6 @@
                                             <!--begin::Description-->
                                             <div class="mb-10 mt-5 font-weight-bold">{{ proj.details }}</div>
                                             <!--end::Description-->
-                                            <!--begin::Data-->
-                                            <div class="d-flex mb-5">
-                                                <div class="d-flex align-items-center mr-7">
-                                                    <span class="font-weight-bold mr-4">Start</span>
-                                                    <span class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">14 Jan, 17</span>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <span class="font-weight-bold mr-4">Due</span>
-                                                    <span class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">15 Oct, 18</span>
-                                                </div>
-                                            </div>
-                                            <!--end::Data-->
                                             <!--begin::Progress-->
                                             <div class="d-flex mb-5 align-items-cente">
                                                 <span class="d-block font-weight-bold mr-5">Progress</span>
@@ -288,7 +276,8 @@
 															</svg>
                                                             <!--end::Svg Icon-->
 														</span>
-                                                    <a href="#" class="font-weight-bolder text-primary ml-2">72
+                                                    <a href="/boards/{{ proj.id }}"
+                                                       class="font-weight-bolder text-primary ml-2">
                                                         Tasks</a>
                                                 </div>
                                             </div>
@@ -414,7 +403,8 @@
 									<span class="navi-text text-muted text-hover-primary">{{ user.email }}</span>
 								</span>
                         </a>
-                        <a href="/signOut" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Sign Out</a>
+                        <a href="/signOut" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Sign
+                            Out</a>
                     </div>
                 </div>
             </div>
