@@ -2,6 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Board(models.Model):
+    members = models.ManyToManyField(User, through='Project')
+
+
+class Project(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=200)
+    details = models.TextField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    members = models.ForeignKey(Board, on_delete=models.CASCADE)
+    # task = models.ManyToManyField(Task, blank=True)
+
+
 class Task(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
@@ -17,16 +30,4 @@ class Task(models.Model):
     status = models.CharField(max_length=1, choices=status_choices)
     start_time = models.DateField(null=True)
     end_time = models.DateField()
-
-
-class Board(models.Model):
-    members = models.ManyToManyField(User, through='Project')
-
-
-class Project(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.CharField(max_length=200)
-    details = models.TextField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    members = models.ForeignKey(Board, on_delete=models.CASCADE)
-    task = models.ManyToManyField(Task, blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)

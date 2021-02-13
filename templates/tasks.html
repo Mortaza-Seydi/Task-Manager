@@ -185,7 +185,7 @@
                     },
                     boards: [
                         {
-                            'id': '_todo',
+                            'id': 'T',
                             'title': 'To Do',
                             'class': 'light-danger',
                             'item': [
@@ -209,7 +209,7 @@
                             ]
                         },
                         {
-                            'id': '_working',
+                            'id': 'D',
                             'title': 'In Progress',
                             'class': 'light-primary',
                             'item': [{% for t in tasks %}
@@ -232,7 +232,7 @@
                             ]
                         },
                         {
-                            'id': '_deploy',
+                            'id': 'I',
                             'title': 'In Test',
                             'class': 'light-primary',
                             'item': [{% for t in tasks %}
@@ -255,7 +255,7 @@
                             ]
                         },
                         {
-                            'id': '_done',
+                            'id': 'O',
                             'title': 'Done',
                             'class': 'light-success',
                             'item': [{% for t in tasks %}
@@ -278,7 +278,7 @@
                             ]
                         },
                         {
-                            'id': '_backlog',
+                            'id': 'B',
                             'title': 'Blocked',
                             'class': 'light-dark',
                             'item': [{% for t in tasks %}
@@ -301,7 +301,7 @@
                             ]
                         },
                         {
-                            'id': '_deleted',
+                            'id': 'L',
                             'title': 'Deleted',
                             'class': 'light-dark',
                             'item': [{% for t in tasks %}
@@ -327,7 +327,16 @@
                     dragendEl: function (el) {
                         let eid = $(el).data("eid");
                         let bid = $(el.parentElement.parentElement).data("id");
-                        console.log(eid, bid)
+                        console.log();
+                        jQuery.ajax(`/boards/${eid}/task`, {
+                            headers: {"X-CSRFToken": $(`{% csrf_token %}`).val()},
+                            type: 'POST',
+                            data: {
+                                "_token": "{{ csrf_token }}",
+                                task_id: eid,
+                                board_id: bid
+                            }
+                        })
                     },
                 });
             }
