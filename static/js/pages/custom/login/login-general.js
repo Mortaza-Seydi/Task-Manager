@@ -1,23 +1,5 @@
 "use strict";
 
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-const csrftoken = getCookie('csrftoken');
-
 // Class Definition
 var KTLogin = function () {
     var _login;
@@ -84,6 +66,9 @@ var KTLogin = function () {
                         jQuery.ajax(window.location.href, {
                             type: "POST",
                             data: $("#kt_login_signin_form").serialize(),
+                            success: (data) => {
+                                window.location.replace('/')
+                            },
                             error: function (data) {
                                 alert(data.responseJSON.error);
                             }
@@ -196,6 +181,9 @@ var KTLogin = function () {
                         jQuery.ajax(window.location.href + '/signUp', {
                             type: "POST",
                             data: $("#kt_login_signup_form").serialize(),
+                            success: (data) => {
+                                window.location.replace('/')
+                            },
                             error: function (data) {
                                 alert(data.responseJSON.error);
                             }

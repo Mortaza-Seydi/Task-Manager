@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import Board, Task, Project
-from users.models import Profile
+from .models import Task, Project
 from django.http import JsonResponse
+import json
 
 
 class Boards(View):
@@ -17,7 +17,7 @@ class Boards(View):
         list = []
 
         for p in projects:
-            if p.owner == user or user in p.members.members.all():
+            if p.owner == user or user.id in p.get_members():
                 list.append(p)
 
         data = {"user": user,
@@ -37,11 +37,13 @@ class Boards(View):
         owner = request.user
         user_ids = request.POST.getlist('users', [])
 
-        proj = Project(name=name, description=description, details=details, owner=owner, members=br)
-        proj.save()
-
+        ids = []
         for id in user_ids:
-            proj.members.members.add(id)
+            ids.append(int(id))
+
+        proj = Project.objects.create(name=name, description=description, details=details, owner=owner,
+                                      members=json.dumps(ids))
+        proj.save()
 
         return redirect('boards')
 
@@ -53,10 +55,12 @@ class Tasks(View):
 
         proj = Project.objects.filter(id=id).first()
         user = request.user
+        users = User.objects.filter(Q(id__in=proj.get_members()) | Q(id=proj.owner.id))
         data = {"user": user,
                 "first": user.username[0],
-                "other_users": proj.members.members.all(),
-                "tasks": proj.task_set.all()
+                "other_users": users,
+                "tasks": proj.task_set.all(),
+                "can_add": user == proj.owner
                 }
         return render(request, 'tasks.html', data)
 
@@ -91,7 +95,7 @@ class ManegeTasks(View):
 
         task = Task.objects.filter(id=task_id).first()
 
-        if status in ['D', 'B', 'L']:
+        if status in ['O', 'B', 'L'] or task.status in ['O', 'B', 'L']:
             if user == task.project.owner:
                 task.status = status
                 task.save()
@@ -100,8 +104,13 @@ class ManegeTasks(View):
                 response.status_code = 403
                 return response
         else:
-            task.status = status
-            task.save()
+            if user == task.assigned_to or user == task.project.owner:
+                task.status = status
+                task.save()
+            else:
+                response = JsonResponse({"error": "You Do Not Have Permission"})
+                response.status_code = 403
+                return response
 
         response = JsonResponse({"message": "OK"})
         response.status_code = 200

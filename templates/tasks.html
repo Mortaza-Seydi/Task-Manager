@@ -53,86 +53,86 @@
                     <div class="card-body">
                         <div id="kt_kanban_4"></div>
                         <div class="mt-4">
-                            <!-- Button  modal-->
-                            <button type="button" class="btn font-weight-bold btn-light-primary mr-5"
-                                    data-toggle="modal"
-                                    data-target="#exampleModal">
-                                Add Task
-                            </button>
+                            {% if can_add %}
+                                <!-- Button  modal-->
+                                <button type="button" class="btn font-weight-bold btn-light-primary mr-5"
+                                        data-toggle="modal"
+                                        data-target="#exampleModal">
+                                    Add Task
+                                </button>
+                                <!-- Modal-->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-                            <!-- Modal-->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Add New
-                                                Task</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <i aria-hidden="true" class="ki ki-close"></i>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form id="add_board_from" method="post">{% csrf_token %}
-                                                <div class="form-group">
-                                                    <label>Name
-                                                        <span class="text-danger">*</span></label>
-                                                    <input id="iname" name="name" type="text"
-                                                           class="form-control form-control-lg"
-                                                           placeholder="Task">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Description
-                                                        <span class="text-danger">*</span></label>
-                                                    <input id="idesc" name="desc" type="text"
-                                                           class="form-control form-control-lg"
-                                                           placeholder="Details ...">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Select DeadLine
-                                                        <span class="text-danger">*</span></label>
-                                                    <div class="input-group date">
-                                                        <input name="date" type="text"
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add New
+                                                    Task</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <i aria-hidden="true" class="ki ki-close"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="add_board_from" method="post">{% csrf_token %}
+                                                    <div class="form-group">
+                                                        <label>Name
+                                                            <span class="text-danger">*</span></label>
+                                                        <input id="iname" name="name" type="text"
                                                                class="form-control form-control-lg"
-                                                               id="kt_datepicker_3"/>
-                                                        <div class="input-group-append">
+                                                               placeholder="Task">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Description
+                                                            <span class="text-danger">*</span></label>
+                                                        <input id="idesc" name="desc" type="text"
+                                                               class="form-control form-control-lg"
+                                                               placeholder="Details ...">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Select DeadLine
+                                                            <span class="text-danger">*</span></label>
+                                                        <div class="input-group date">
+                                                            <input name="date" type="text"
+                                                                   class="form-control form-control-lg"
+                                                                   id="kt_datepicker_3"/>
+                                                            <div class="input-group-append">
                                                                <span class="input-group-text">
                                                                 <i class="la la-calendar"></i>
                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Select User
-                                                        <span class="text-danger">*</span></label><br>
-                                                    <select name="users" style="opacity: 1"
-                                                            class="form-control form-control-lg select2"
-                                                            id="kt_select2_3"
-                                                            name="param">
-                                                        {% for ou in other_users %}
-                                                            <option value="{{ ou.id }}">{{ ou.username }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <button type="button"
-                                                            class="btn btn-light-primary font-weight-bold"
-                                                            data-dismiss="modal">Close
-                                                    </button>
-                                                    <button type="submit"
-                                                            class="btn btn-primary font-weight-bold">Save
-                                                        changes
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                                    <div class="form-group">
+                                                        <label>Select User
+                                                            <span class="text-danger">*</span></label><br>
+                                                        <select name="users" style="opacity: 1"
+                                                                class="form-control form-control-lg select2"
+                                                                id="kt_select2_3"
+                                                                name="param">
+                                                            {% for ou in other_users %}
+                                                                <option value="{{ ou.id }}">{{ ou.username }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="button"
+                                                                class="btn btn-light-primary font-weight-bold"
+                                                                data-dismiss="modal">Close
+                                                        </button>
+                                                        <button type="submit"
+                                                                class="btn btn-primary font-weight-bold">Save
+                                                            changes
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
+                            {% endif %}
 
                         </div>
                     </div>
@@ -335,6 +335,9 @@
                                 "_token": "{{ csrf_token }}",
                                 task_id: eid,
                                 board_id: bid
+                            },
+                            error: (data) => {
+                                alert(data.responseJSON.error);
                             }
                         })
                     },

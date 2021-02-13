@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
@@ -52,6 +52,8 @@ class SignUp(View):
             user = User.objects.create_user(username, email, password)
             user.save()
 
+            login(request, user)
+
             n = random.randint(16, 45)
             pf_url = f'/media/users/{n}.jpg'
             pf = Profile(user=user, profile_photo=pf_url)
@@ -63,3 +65,9 @@ class SignUp(View):
             response = JsonResponse({"error": "Duplicate User or Server error"})
             response.status_code = 403
             return response
+
+
+class SignOut(View):
+    def get(self, request):
+        logout(request)
+        return redirect('signIn')

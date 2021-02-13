@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-
-class Board(models.Model):
-    members = models.ManyToManyField(User, through='Project')
+import json
 
 
 class Project(models.Model):
@@ -11,9 +8,10 @@ class Project(models.Model):
     description = models.CharField(max_length=200)
     details = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    members = models.ForeignKey(Board, on_delete=models.CASCADE)
-    # task = models.ManyToManyField(Task, blank=True)
+    members = models.CharField(max_length=500)
 
+    def get_members(self):
+        return json.loads(self.members)
 
 class Task(models.Model):
     name = models.CharField(max_length=50)
