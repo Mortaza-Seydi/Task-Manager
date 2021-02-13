@@ -45,22 +45,84 @@
             <div class="container">
                 <!--begin::Card-->
                 <div class="card card-custom gutter-b">
-                    {#                    <div class="card-header">#}
-                    {#                        <div class="card-title">#}
-                    {#                            <h3 class="card-label">Interactivity Example</h3>#}
-                    {#                        </div>#}
-                    {#                    </div>#}
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h3 class="card-label">Tasks</h3>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div id="kt_kanban_4"></div>
                         <div class="mt-4">
-                            <button class="btn font-weight-bold btn-light-primary mr-5" id="addToDo">Add
-                                Task
+                            <!-- Button  modal-->
+                            <button type="button" class="btn font-weight-bold btn-light-primary mr-5"
+                                    data-toggle="modal"
+                                    data-target="#exampleModal">
+                                Add Task
                             </button>
+
+                            <!-- Modal-->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add New
+                                                Task</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="add_board_from" method="post">{% csrf_token %}
+                                                <div class="form-group">
+                                                    <label>Name
+                                                        <span class="text-danger">*</span></label>
+                                                    <input id="iname" name="name" type="text"
+                                                           class="form-control form-control-lg"
+                                                           placeholder="Task">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Description
+                                                        <span class="text-danger">*</span></label>
+                                                    <input id="idesc" name="desc" type="text"
+                                                           class="form-control form-control-lg"
+                                                           placeholder="Details ...">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Select User
+                                                        <span class="text-danger">*</span></label><br>
+                                                    <select name="users" style="opacity: 1"
+                                                            class="form-control form-control-lg select2"
+                                                            id="kt_select2_3"
+                                                            name="param">
+                                                        {% for ou in other_users %}
+                                                            <option value="{{ ou.id }}">{{ ou.username }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                            class="btn btn-light-primary font-weight-bold"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                    <button type="submit"
+                                                            class="btn btn-primary font-weight-bold">Save
+                                                        changes
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
-                <!--end::Card-->
-
                 <div class="card card-custom">
                     <div class="card-header">
                         <div class="card-title">
@@ -73,6 +135,7 @@
                         <div id="kt_calendar"></div>
                     </div>
                 </div>
+                <!--end::Card-->
 
             </div>
             <!--end::Container-->
@@ -88,6 +151,7 @@
     <script src="{% static '/plugins/custom/kanban/kanban.bundle.js' %}"></script>
     <script src="{% static '/plugins/custom/fullcalendar/fullcalendar.bundle.js' %}"></script>
     <script src="{% static '/js/pages/features/calendar/basic.js' %}"></script>
+    <script src="{% static '/js/pages/my-script.js' %}"></script>
 
     {#    <script src="{% static '/js/pages/features/miscellaneous/kanban-board.js' %}"></script>#}
 
@@ -95,7 +159,6 @@
         "use strict";
 
         // Class definition
-
         var KTKanbanBoardDemo = function () {
             // Private functions
             var _demo4 = function () {
@@ -329,6 +392,7 @@
 
         jQuery(document).ready(function () {
             KTKanbanBoardDemo.init();
+
         });
 
     </script>

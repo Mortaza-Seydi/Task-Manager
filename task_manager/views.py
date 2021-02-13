@@ -23,17 +23,15 @@ class Boards(View):
             return redirect('signIn')
 
         else:
-            print(request.POST)
             name = request.POST['name']
             description = request.POST['desc']
             details = request.POST['details']
             owner = request.user
             user_ids = request.POST.getlist('users', [])
 
-            print(name, details, description, owner, user_ids)
-
             br = Board()
             br.save()
+
             for id in user_ids:
                 br.members.add(id)
 
@@ -49,5 +47,17 @@ class Tasks(View):
             user = request.user
             data = {"user": user,
                     "first": user.username[0],
+                    "other_users": User.objects.all(),
                     }
             return render(request, 'tasks.html', data)
+
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return redirect('signIn')
+
+        else:
+            name = request.POST['name']
+            description = request.POST['desc']
+            assigned_to = request.POST['users']
+
+            print(name, description, assigned_to)
