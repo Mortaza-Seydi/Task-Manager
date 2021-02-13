@@ -3,6 +3,7 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Board, Task, Project
+from users.models import Profile
 
 
 class Boards(View):
@@ -52,6 +53,8 @@ class Tasks(View):
                     "tasks": proj.task.all()
                     }
             return render(request, 'tasks.html', data)
+        else:
+            return redirect("signIn")
 
     def post(self, request, id):
         if not request.user.is_authenticated:

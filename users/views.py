@@ -4,7 +4,8 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from .models import MyUser
+from .models import Profile
+import random
 
 
 def index(request):
@@ -51,8 +52,9 @@ class SignUp(View):
             user = User.objects.create_user(username, email, password)
             user.save()
 
-            pf_url = '/media/users/'
-            pf = MyUser(user=user, profile_photo=pf_url)
+            n = random.randint(16, 45)
+            pf_url = f'/media/users/{n}.jpg'
+            pf = Profile(user=user, profile_photo=pf_url)
             pf.save()
 
             return redirect('boards')

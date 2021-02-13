@@ -192,10 +192,11 @@
                                 {% for t in tasks %}
                                     {% if t.status == 'T' %}
                                         {
+                                            'id': {{ t.id }},
                                             'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/30.jpg' %}" />
+                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -214,10 +215,11 @@
                             'item': [{% for t in tasks %}
                                 {% if t.status == 'D' %}
                                     {
+                                        'id': {{ t.id }},
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/30.jpg' %}" />
+                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -236,10 +238,11 @@
                             'item': [{% for t in tasks %}
                                 {% if t.status == 'I' %}
                                     {
+                                        'id': {{ t.id }},
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/30.jpg' %}" />
+                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -258,10 +261,11 @@
                             'item': [{% for t in tasks %}
                                 {% if t.status == 'O' %}
                                     {
+                                        'id': {{ t.id }},
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/30.jpg' %}" />
+                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -280,10 +284,11 @@
                             'item': [{% for t in tasks %}
                                 {% if t.status == 'B' %}
                                     {
+                                        'id': {{ t.id }},
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/30.jpg' %}" />
+                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -302,10 +307,11 @@
                             'item': [{% for t in tasks %}
                                 {% if t.status == 'L' %}
                                     {
+                                        'id': {{ t.id }},
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/30.jpg' %}" />
+                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -317,7 +323,12 @@
                             {% endfor %}
                             ]
                         }
-                    ]
+                    ],
+                    dragendEl: function (el) {
+                        let eid = $(el).data("eid");
+                        let bid = $(el.parentElement.parentElement).data("id");
+                        console.log(eid, bid)
+                    },
                 });
             }
 
