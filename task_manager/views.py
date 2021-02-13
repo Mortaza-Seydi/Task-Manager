@@ -42,16 +42,18 @@ class Boards(View):
 
 
 class Tasks(View):
-    def get(self, request):
+    def get(self, request, id):
+        proj = Project.objects.filter(id=id).first()
         if request.user.is_authenticated:
             user = request.user
             data = {"user": user,
                     "first": user.username[0],
                     "other_users": User.objects.all(),
+                    "tasks": proj.task.all()
                     }
             return render(request, 'tasks.html', data)
 
-    def post(self, request):
+    def post(self, request, id):
         if not request.user.is_authenticated:
             return redirect('signIn')
 
@@ -59,5 +61,14 @@ class Tasks(View):
             name = request.POST['name']
             description = request.POST['desc']
             assigned_to = request.POST['users']
+            status = 'T'
+            end_time = request.POST['date']
 
-            print(name, description, assigned_to)
+            task = Task(name=name, description=description, assigned_to_id=assigned_to, status=status,
+                        end_time=end_time)
+            task.save()
+
+            proj = Project.objects.filter(id=id).first()
+            proj.task.add(task)
+
+            return redirect('tasks', id=id)

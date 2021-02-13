@@ -25,7 +25,7 @@
                         <!--begin::Breadcrumb-->
                         <div class="d-flex align-items-center font-weight-bold my-2">
                             <!--begin::Item-->
-                            <a href="#" class="opacity-75 hover-opacity-100">
+                            <a href="/boards" class="opacity-75 hover-opacity-100">
                                 <i class="flaticon2-shelter text-white icon-1x"></i>
                             </a>
                             <!--end::Item-->
@@ -91,6 +91,20 @@
                                                            placeholder="Details ...">
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Select DeadLine
+                                                        <span class="text-danger">*</span></label>
+                                                    <div class="input-group date">
+                                                        <input name="date" type="text"
+                                                               class="form-control form-control-lg"
+                                                               id="kt_datepicker_3"/>
+                                                        <div class="input-group-append">
+                                                               <span class="input-group-text">
+                                                                <i class="la la-calendar"></i>
+                                                               </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
                                                     <label>Select User
                                                         <span class="text-danger">*</span></label><br>
                                                     <select name="users" style="opacity: 1"
@@ -152,6 +166,7 @@
     <script src="{% static '/plugins/custom/fullcalendar/fullcalendar.bundle.js' %}"></script>
     <script src="{% static '/js/pages/features/calendar/basic.js' %}"></script>
     <script src="{% static '/js/pages/my-script.js' %}"></script>
+    {#    <script src="{% static '/js/pages/crud/forms/widgets/bootstrap-datepicker.js' %}"></script>#}
 
     {#    <script src="{% static '/js/pages/features/miscellaneous/kanban-board.js' %}"></script>#}
 
@@ -173,212 +188,136 @@
                             'id': '_todo',
                             'title': 'To Do',
                             'class': 'light-danger',
-                            'item': [{
-                                'title': `
+                            'item': [
+                                {% for t in tasks %}
+                                    {% if t.status == 'T' %}
+                                        {
+                                            'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
                         	            <img alt="Pic" src="{% static '/media/users/300_16.jpg' %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">Server Setup</span>
-                        	            <span class="label label-inline label-light-dark font-weight-bold">Completed</span>
+                        	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
+                        	            <span class="label label-inline label-light-dark font-weight-bold">{{t.end_time}}</span>
                         	        </div>
-                        	    </div>
-                            `,
-                            },
-                                {
-                                    'title': `
-                                <div class="d-flex align-items-center">
-                        	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/300_15.jpg' %}" />
-                        	        </div>
-                        	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">Report Generation</span>
-                        	            <span class="label label-inline label-light-warning font-weight-bold">Due</span>
-                        	        </div>
-                        	    </div>
-                            `,
-                                }
+                        	    </div>`
+                                        },
+                                    {% endif %}
+                                {% endfor %}
                             ]
                         },
                         {
                             'id': '_working',
                             'title': 'In Progress',
                             'class': 'light-primary',
-                            'item': [{
-                                'title': `
+                            'item': [{% for t in tasks %}
+                                {% if t.status == 'D' %}
+                                    {
+                                        'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                            	         <img alt="Pic" src="{% static '/media/users/300_24.jpg' %}" />
+                        	            <img alt="Pic" src="{% static '/media/users/300_16.jpg' %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">Marketing</span>
-                        	            <span class="label label-inline label-light-danger font-weight-bold">Planning</span>
+                        	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
+                        	            <span class="label label-inline label-light-success font-weight-bold">{{t.end_time}}</span>
                         	        </div>
-                        	    </div>
-                            `,
-                            },
-                                {
-                                    'title': `
-                                <div class="d-flex align-items-center">
-                        	        <div class="symbol symbol-light-info mr-3">
-                        	            <span class="symbol-label font-size-h4">A.P</span>
-                        	        </div>
-                        	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">Finance</span>
-                        	            <span class="label label-inline label-light-primary font-weight-bold">Done</span>
-                        	        </div>
-                        	    </div>
-                            `,
-                                }
+                        	    </div>`
+                                    },
+                                {% endif %}
+                            {% endfor %}
                             ]
                         },
                         {
                             'id': '_deploy',
                             'title': 'In Test',
                             'class': 'light-primary',
-                            'item': [{
-                                'title': `
+                            'item': [{% for t in tasks %}
+                                {% if t.status == 'I' %}
+                                    {
+                                        'title': `
                                 <div class="d-flex align-items-center">
-                        	        <div class="symbol symbol-light-warning mr-3">
-                        	            <span class="symbol-label font-size-h4">D.L</span>
+                        	        <div class="symbol symbol-success mr-3">
+                        	            <img alt="Pic" src="{% static '/media/users/300_16.jpg' %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">SEO Optimization</span>
-                        	            <span class="label label-inline label-light-success font-weight-bold">In progress</span>
+                        	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
+                        	            <span class="label label-inline label-light-warning font-weight-bold">{{t.end_time}}</span>
                         	        </div>
-                        	    </div>
-                            `,
-                            },
-                                {
-                                    'title': `
-                                <div class="d-flex align-items-center">
-                        	        <div class="symbol symbol-light-danger mr-3">
-                        	            <span class="symbol-label font-size-h4">E.K</span>
-                        	        </div>
-                        	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">Requirement Study</span>
-                        	            <span class="label label-inline label-light-warning font-weight-bold">Scheduled</span>
-                        	        </div>
-                        	    </div>
-                            `,
-                                }
+                        	    </div>`
+                                    },
+                                {% endif %}
+                            {% endfor %}
                             ]
                         },
                         {
                             'id': '_done',
                             'title': 'Done',
                             'class': 'light-success',
-                            'item': [{
-                                'title': `
+                            'item': [{% for t in tasks %}
+                                {% if t.status == 'O' %}
+                                    {
+                                        'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/300_11.jpg' %}" />
+                        	            <img alt="Pic" src="{% static '/media/users/300_16.jpg' %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">SEO Optimization</span>
-                        	            <span class="label label-inline label-light-success font-weight-bold">In progress</span>
+                        	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
+                        	            <span class="label label-inline label-light-primary font-weight-bold">{{t.end_time}}</span>
                         	        </div>
-                        	    </div>
-                            `,
-                            },
-                                {
-                                    'title': `
-                                <div class="d-flex align-items-center">
-                        	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/300_20.jpg' %}" />
-                        	        </div>
-                        	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">Product Team</span>
-                        	            <span class="label label-inline label-light-danger font-weight-bold">In progress</span>
-                        	        </div>
-                        	    </div>
-                            `,
-                                }
+                        	    </div>`
+                                    },
+                                {% endif %}
+                            {% endfor %}
                             ]
                         },
                         {
                             'id': '_backlog',
                             'title': 'Blocked',
                             'class': 'light-dark',
-                            'item': [{
-                                'title': `
+                            'item': [{% for t in tasks %}
+                                {% if t.status == 'B' %}
+                                    {
+                                        'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="{% static '/media/users/300_24.jpg' %}" />
+                        	            <img alt="Pic" src="{% static '/media/users/300_16.jpg' %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">SEO Optimization</span>
-                        	            <span class="label label-inline label-light-success font-weight-bold">In progress</span>
+                        	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
+                        	            <span class="label label-inline label-light-danger font-weight-bold">{{t.end_time}}</span>
                         	        </div>
-                        	    </div>
-                            `,
-                            },
-                                {
-                                    'title': `
-                                <div class="d-flex align-items-center">
-                        	        <div class="symbol symbol-success mr-3">
-                        	            <span class="symbol-label font-size-h4">A.D</span>
-                        	        </div>
-                        	        <div class="d-flex flex-column align-items-start">
-                        	            <span class="text-dark-50 font-weight-bold mb-1">Finance</span>
-                        	            <span class="label label-inline label-light-danger font-weight-bold">Pending</span>
-                        	        </div>
-                        	    </div>
-                            `,
-                                }
+                        	    </div>`
+                                    },
+                                {% endif %}
+                            {% endfor %}
                             ]
                         },
                         {
                             'id': '_deleted',
                             'title': 'Deleted',
                             'class': 'light-dark',
-                            'item': [{
-                                'title': `
+                            'item': [{% for t in tasks %}
+                                {% if t.status == 'L' %}
+                                    {
+                                        'title': `
                                 <div class="d-flex align-items-center">
-                                    <div class="symbol symbol-success mr-3">
-                                        <img alt="Pic" src="{% static '/media/users/300_13.jpg' %}" />
-                                    </div>
-                                    <div class="d-flex flex-column align-items-start">
-                                        <span class="text-dark-50 font-weight-bold mb-1">Payment Modules</span>
-                                        <span class="label label-inline label-light-primary font-weight-bold">In development</span>
-                                    </div>
-                                </div>
-                        `
-                            }, {
-                                'title': `
-                                <div class="d-flex align-items-center">
-                                    <div class="symbol symbol-success mr-3">
-                                        <img alt="Pic" src="{% static '/media/users/300_12.jpg' %}" />
-                                    </div>
-                                    <div class="d-flex flex-column align-items-start">
-                                    <span class="text-dark-50 font-weight-bold mb-1">New Project</span>
-                                    <span class="label label-inline label-light-danger font-weight-bold">Pending</span>
-                                </div>
-                            </div>
-                        `
-                            }
+                        	        <div class="symbol symbol-success mr-3">
+                        	            <img alt="Pic" src="{% static '/media/users/300_16.jpg' %}" />
+                        	        </div>
+                        	        <div class="d-flex flex-column align-items-start">
+                        	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
+                        	            <span class="label label-inline label-light-danger font-weight-bold">{{t.end_time}}</span>
+                        	        </div>
+                        	    </div>`
+                                    },
+                                {% endif %}
+                            {% endfor %}
                             ]
                         }
                     ]
-                });
-
-                var toDoButton = document.getElementById('addToDo');
-                toDoButton.addEventListener('click', function () {
-                    kanban.addElement(
-                        '_todo', {
-                            'title':
-                                `<div class="d-flex align-items-center">
-                            <div class="symbol symbol-light-primary mr-3">
-                                <img alt="Pic" src="{% static '/media/users/300_14.jpg' %}" />
-                            </div>
-                            <div class="d-flex flex-column align-items-start">
-                                <span class="text-dark-50 font-weight-bold mb-1">Requirement Study</span>
-                                <span class="label label-inline label-light-success font-weight-bold">Scheduled</span>
-                            </div>
-                        </div>`
-                        }
-                    );
                 });
             }
 

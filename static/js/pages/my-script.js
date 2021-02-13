@@ -4,8 +4,24 @@ var KTFormWidgetsValidation = function () {
     // Private functions
     var validator;
 
+
     var _initWidgets = function () {
         // Initialize Plugins
+
+        $('#kt_datepicker_3, #kt_datepicker_3_validate').datepicker({
+            rtl: false,
+            format: 'yyyy-mm-dd',
+            todayBtn: "linked",
+            clearBtn: true,
+            todayHighlight: true,
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>'
+            }
+        }).on('changeDate', function (e) {
+            // Revalidate field
+            validator.revalidateField('date');
+        });
 
         // Select2
         $('#kt_select2_3').select2({
@@ -73,6 +89,13 @@ var KTFormWidgetsValidation = function () {
                                 min: 1,
                                 max: 1000,
                                 message: 'Please enter a menu within text length range 1 and 1000'
+                            }
+                        }
+                    },
+                    date: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Date is required'
                             }
                         }
                     },

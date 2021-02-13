@@ -11,11 +11,12 @@ class Task(models.Model):
         ('D', 'Doing'),
         ('I', 'In Test'),
         ('O', 'Done'),
-        ('B', 'Blocked')
+        ('B', 'Blocked'),
+        ('L', 'Deleted')
     )
     status = models.CharField(max_length=1, choices=status_choices)
-    start_time = models.DateField(blank=True)
-    end_time = models.DateField(blank=True)
+    start_time = models.DateField(null=True)
+    end_time = models.DateField()
 
 
 class Board(models.Model):
