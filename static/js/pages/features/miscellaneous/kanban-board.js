@@ -19,7 +19,7 @@ var KTKanbanBoardDemo = function() {
                             'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="assets/media/users/300_24.jpg" />
+                        	            <img alt="Pic" src="{% static '/media/users/300_24.jpg' %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">SEO Optimization</span>

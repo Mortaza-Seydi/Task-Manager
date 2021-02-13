@@ -41,3 +41,13 @@ class Boards(View):
             proj.save()
 
             return redirect('boards')
+
+
+class Tasks(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            user = request.user
+            data = {"user": user,
+                    "first": user.username[0],
+                    }
+            return render(request, 'tasks.html', data)

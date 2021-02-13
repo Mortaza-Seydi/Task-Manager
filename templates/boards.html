@@ -66,206 +66,213 @@
                     <!--end::Container-->
                 </div>
                 <!--end::Header-->
-                <!--begin::Content-->
-                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-                    <!--begin::Subheader-->
-                    <div class="subheader py-2 py-lg-12 subheader-transparent" id="kt_subheader">
-                        <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-                            <!--begin::Info-->
-                            <div class="d-flex align-items-center flex-wrap mr-1">
-                                <!--begin::Heading-->
-                                <div class="d-flex flex-column">
-                                    <!--begin::Title-->
-                                    <h2 class="text-white font-weight-bold my-2 mr-5">Boards</h2>
-                                    <!--end::Title-->
+
+                {% block body %}
+
+                    <!--begin::Content-->
+                    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                        <!--begin::Subheader-->
+                        <div class="subheader py-2 py-lg-12 subheader-transparent" id="kt_subheader">
+                            <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                                <!--begin::Info-->
+                                <div class="d-flex align-items-center flex-wrap mr-1">
+                                    <!--begin::Heading-->
+                                    <div class="d-flex flex-column">
+                                        <!--begin::Title-->
+                                        <h2 class="text-white font-weight-bold my-2 mr-5">Boards</h2>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::Heading-->
                                 </div>
-                                <!--end::Heading-->
-                            </div>
-                            <!--end::Info-->
-                            <!--begin::Toolbar-->
-                            <div class="d-flex align-items-center">
-                                <!--begin::Button-->
-                                <a href="#"
-                                   class="btn btn-transparent-white font-weight-bold py-3 px-6 mr-2">Reports</a>
-                                <!--end::Button-->
-                                <!--begin::Dropdown-->
-                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="Add New Board"
-                                     data-placement="top">
-                                    <!-- Button  modal-->
-                                    <button type="button" class="btn btn-white font-weight-bold py-3 px-6"
-                                            data-toggle="modal"
-                                            data-target="#exampleModal">
-                                        New Board
-                                    </button>
+                                <!--end::Info-->
+                                <!--begin::Toolbar-->
+                                <div class="d-flex align-items-center">
+                                    <!--begin::Button-->
+                                    <a href="#"
+                                       class="btn btn-transparent-white font-weight-bold py-3 px-6 mr-2">Reports</a>
+                                    <!--end::Button-->
+                                    <!--begin::Dropdown-->
+                                    <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
+                                         title="Add New Board"
+                                         data-placement="top">
+                                        <!-- Button  modal-->
+                                        <button type="button" class="btn btn-white font-weight-bold py-3 px-6"
+                                                data-toggle="modal"
+                                                data-target="#exampleModal">
+                                            New Board
+                                        </button>
 
-                                    <!-- Modal-->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <!-- Modal-->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Add New Board</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <i aria-hidden="true" class="ki ki-close"></i>
-                                                    </button>
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Add New
+                                                            Board</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="add_board_from" method="post">{% csrf_token %}
+                                                            <div class="form-group">
+                                                                <label>Name
+                                                                    <span class="text-danger">*</span></label>
+                                                                <input id="iname" name="name" type="text"
+                                                                       class="form-control form-control-lg"
+                                                                       placeholder="My Project">
+                                                                <div class="valid-feedback">Success! You've done it.
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Description
+                                                                    <span class="text-danger">*</span></label>
+                                                                <input id="idesc" name="desc" type="text"
+                                                                       class="form-control form-control-lg"
+                                                                       placeholder="Used for ???">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="Textarea">Details
+                                                                    <span class="text-danger">*</span></label>
+                                                                <textarea name="details" class="form-control"
+                                                                          id="idetails"
+                                                                          rows="3" placeholder="Say mor"></textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Multi Select
+                                                                    <span class="text-danger">*</span></label><br>
+                                                                <select name="users" style="width: 100%"
+                                                                        class="form-control form-control-lg select2"
+                                                                        id="kt_select2_3"
+                                                                        name="param" multiple="multiple">
+                                                                    {% for ou in other_users %}
+                                                                        <option value="{{ ou.id }}">{{ ou.username }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <button type="button"
+                                                                        class="btn btn-light-primary font-weight-bold"
+                                                                        data-dismiss="modal">Close
+                                                                </button>
+                                                                <button type="submit"
+                                                                        class="btn btn-primary font-weight-bold">Save
+                                                                    changes
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form id="add_board_from" method="post">{% csrf_token %}
-                                                        <div class="form-group">
-                                                            <label>Name
-                                                                <span class="text-danger">*</span></label>
-                                                            <input id="iname" name="name" type="text"
-                                                                   class="form-control form-control-lg"
-                                                                   placeholder="My Project">
-                                                            <div class="valid-feedback">Success! You've done it.</div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Description
-                                                                <span class="text-danger">*</span></label>
-                                                            <input id="idesc" name="desc" type="text"
-                                                                   class="form-control form-control-lg"
-                                                                   placeholder="Used for ???">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="Textarea">Details
-                                                                <span class="text-danger">*</span></label>
-                                                            <textarea name="details" class="form-control" id="idetails"
-                                                                      rows="3" placeholder="Say mor"></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Multi Select
-                                                                <span class="text-danger">*</span></label><br>
-                                                            <select name="users" style="width: 100%"
-                                                                    class="form-control form-control-lg select2"
-                                                                    id="kt_select2_3"
-                                                                    name="param" multiple="multiple">
-                                                                {% for ou in other_users %}
-                                                                    <option value="{{ ou.id }}">{{ ou.username }}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <button type="button"
-                                                                    class="btn btn-light-primary font-weight-bold"
-                                                                    data-dismiss="modal">Close
-                                                            </button>
-                                                            <button type="submit"
-                                                                    class="btn btn-primary font-weight-bold">Save
-                                                                changes
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
                                             </div>
                                         </div>
+
                                     </div>
-
+                                    <!--end::Dropdown-->
                                 </div>
-                                <!--end::Dropdown-->
+                                <!--end::Toolbar-->
                             </div>
-                            <!--end::Toolbar-->
                         </div>
-                    </div>
-                    <!--end::Subheader-->
-                    <!--begin::Entry-->
-                    <div class="d-flex flex-column-fluid">
-                        <!--begin::Container-->
-                        <div class="container">
-                            {% for proj in projects %}
-                                {% if forloop.first %}
-                                    <div class="row">{% endif %}
+                        <!--end::Subheader-->
+                        <!--begin::Entry-->
+                        <div class="d-flex flex-column-fluid">
+                            <!--begin::Container-->
+                            <div class="container">
+                                {% for proj in projects %}
+                                    {% if forloop.first %}
+                                        <div class="row">{% endif %}
 
-                            <div class="col-xl-4">
-                                <!--begin::Card-->
-                                <div class="card card-custom gutter-b card-stretch">
-                                    <!--begin::Body-->
-                                    <div class="card-body">
-                                        <!--begin::Info-->
-                                        <div class="d-flex align-items-center">
-                                            <!--begin::Pic-->
-                                            <div class="flex-shrink-0 mr-4 symbol symbol-60 symbol-circle">
-                                                <img src="{% static '/media/project-logos/3.png' %}"
-                                                     alt="image"/>
-                                            </div>
-                                            <!--end::Pic-->
+                                <div class="col-xl-4">
+                                    <!--begin::Card-->
+                                    <div class="card card-custom gutter-b card-stretch">
+                                        <!--begin::Body-->
+                                        <div class="card-body">
                                             <!--begin::Info-->
-                                            <div class="d-flex flex-column mr-auto">
-                                                <!--begin: Title-->
-                                                <div class="d-flex flex-column mr-auto">
-                                                    <a href="#"
-                                                       class="text-dark text-hover-primary font-size-h4 font-weight-bolder mb-1">{{ proj.name }}</a>
-                                                    <span class="text-muted font-weight-bold">{{ proj.description }}</span>
+                                            <div class="d-flex align-items-center">
+                                                <!--begin::Pic-->
+                                                <div class="flex-shrink-0 mr-4 symbol symbol-60 symbol-circle">
+                                                    <img src="{% static '/media/project-logos/3.png' %}"
+                                                         alt="image"/>
                                                 </div>
-                                                <!--end::Title-->
-                                            </div>
-                                            <!--end::Info-->
-                                            <!--begin::Toolbar-->
-                                            <div class="card-toolbar mb-7">
-                                                <div class="dropdown dropdown-inline" data-toggle="tooltip"
-                                                     title="Quick actions" data-placement="left">
-                                                    <a href="#"
-                                                       class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
-                                                       data-toggle="dropdown" aria-haspopup="true"
-                                                       aria-expanded="false">
-                                                        <i class="ki ki-bold-more-hor"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                                        <!--begin::Navigation-->
-                                                        <ul class="navi navi-hover">
-                                                            <li class="navi-item">
-                                                                <a href="#" class="navi-link">
+                                                <!--end::Pic-->
+                                                <!--begin::Info-->
+                                                <div class="d-flex flex-column mr-auto">
+                                                    <!--begin: Title-->
+                                                    <div class="d-flex flex-column mr-auto">
+                                                        <a href="#"
+                                                           class="text-dark text-hover-primary font-size-h4 font-weight-bolder mb-1">{{ proj.name }}</a>
+                                                        <span class="text-muted font-weight-bold">{{ proj.description }}</span>
+                                                    </div>
+                                                    <!--end::Title-->
+                                                </div>
+                                                <!--end::Info-->
+                                                <!--begin::Toolbar-->
+                                                <div class="card-toolbar mb-7">
+                                                    <div class="dropdown dropdown-inline" data-toggle="tooltip"
+                                                         title="Quick actions" data-placement="left">
+                                                        <a href="#"
+                                                           class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
+                                                           data-toggle="dropdown" aria-haspopup="true"
+                                                           aria-expanded="false">
+                                                            <i class="ki ki-bold-more-hor"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                            <!--begin::Navigation-->
+                                                            <ul class="navi navi-hover">
+                                                                <li class="navi-item">
+                                                                    <a href="#" class="navi-link">
 																			<span class="navi-icon">
 																				<i class="flaticon2-delete"></i>
 																			</span>
-                                                                    <span class="navi-text">Remove</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <!--end::Navigation-->
+                                                                        <span class="navi-text">Remove</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                            <!--end::Navigation-->
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <!--end::Toolbar-->
                                             </div>
-                                            <!--end::Toolbar-->
-                                        </div>
-                                        <!--end::Info-->
-                                        <!--begin::Description-->
-                                        <div class="mb-10 mt-5 font-weight-bold">{{ proj.details }}</div>
-                                        <!--end::Description-->
-                                        <!--begin::Data-->
-                                        <div class="d-flex mb-5">
-                                            <div class="d-flex align-items-center mr-7">
-                                                <span class="font-weight-bold mr-4">Start</span>
-                                                <span class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">14 Jan, 17</span>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <span class="font-weight-bold mr-4">Due</span>
-                                                <span class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">15 Oct, 18</span>
-                                            </div>
-                                        </div>
-                                        <!--end::Data-->
-                                        <!--begin::Progress-->
-                                        <div class="d-flex mb-5 align-items-cente">
-                                            <span class="d-block font-weight-bold mr-5">Progress</span>
-                                            <div class="d-flex flex-row-fluid align-items-center">
-                                                <div class="progress progress-xs mt-2 mb-2 w-100">
-                                                    <div class="progress-bar bg-success" role="progressbar"
-                                                         style="width: 59%;" aria-valuenow="50"
-                                                         aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
+                                            <!--end::Info-->
+                                            <!--begin::Description-->
+                                            <div class="mb-10 mt-5 font-weight-bold">{{ proj.details }}</div>
+                                            <!--end::Description-->
+                                            <!--begin::Data-->
+                                            <div class="d-flex mb-5">
+                                                <div class="d-flex align-items-center mr-7">
+                                                    <span class="font-weight-bold mr-4">Start</span>
+                                                    <span class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">14 Jan, 17</span>
                                                 </div>
-                                                <span class="ml-3 font-weight-bolder">59%</span>
+                                                <div class="d-flex align-items-center">
+                                                    <span class="font-weight-bold mr-4">Due</span>
+                                                    <span class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">15 Oct, 18</span>
+                                                </div>
                                             </div>
+                                            <!--end::Data-->
+                                            <!--begin::Progress-->
+                                            <div class="d-flex mb-5 align-items-cente">
+                                                <span class="d-block font-weight-bold mr-5">Progress</span>
+                                                <div class="d-flex flex-row-fluid align-items-center">
+                                                    <div class="progress progress-xs mt-2 mb-2 w-100">
+                                                        <div class="progress-bar bg-success" role="progressbar"
+                                                             style="width: 59%;" aria-valuenow="50"
+                                                             aria-valuemin="0"
+                                                             aria-valuemax="100"></div>
+                                                    </div>
+                                                    <span class="ml-3 font-weight-bolder">59%</span>
+                                                </div>
+                                            </div>
+                                            <!--ebd::Progress-->
                                         </div>
-                                        <!--ebd::Progress-->
-                                    </div>
-                                    <!--end::Body-->
-                                    <!--begin::Footer-->
-                                    <div class="card-footer d-flex align-items-center">
-                                        <div class="d-flex">
-                                            <div class="d-flex align-items-center mr-7">
+                                        <!--end::Body-->
+                                        <!--begin::Footer-->
+                                        <div class="card-footer d-flex align-items-center">
+                                            <div class="d-flex">
+                                                <div class="d-flex align-items-center mr-7">
 														<span class="svg-icon svg-icon-gray-500">
 															<!--begin::Svg Icon | path:/media/svg/icons/Text/Bullet-list.svg-->
 															<svg xmlns="http://www.w3.org/2000/svg"
@@ -282,56 +289,59 @@
 															</svg>
                                                             <!--end::Svg Icon-->
 														</span>
-                                                <a href="#" class="font-weight-bolder text-primary ml-2">72
-                                                    Tasks</a>
+                                                    <a href="#" class="font-weight-bolder text-primary ml-2">72
+                                                        Tasks</a>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!--end::Footer-->
                                     </div>
-                                    <!--end::Footer-->
+                                    <!--end:: Card-->
                                 </div>
-                                <!--end:: Card-->
-                            </div>
 
-                            {% if forloop.counter|divisibleby:3 %}</div>
-                                <div class="row">{% endif %}
-                            {% if forloop.last %}</div>{% endif %}
-                            {% endfor %}
-                            <!--begin::Pagination-->
-                            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                <div class="d-flex flex-wrap mr-3">
-                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                        <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                        <i class="ki ki-bold-arrow-back icon-xs"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">1</a>
-                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                        <i class="ki ki-bold-arrow-next icon-xs"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                        <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                                    </a>
+                                {% if forloop.counter|divisibleby:3 %}</div>
+                                    <div class="row">{% endif %}
+                                {% if forloop.last %}</div>{% endif %}
+                                {% endfor %}
+                                <!--begin::Pagination-->
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="d-flex flex-wrap mr-3">
+                                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                                            <i class="ki ki-bold-double-arrow-back icon-xs"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                                            <i class="ki ki-bold-arrow-back icon-xs"></i>
+                                        </a>
+                                        <a href="#"
+                                           class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">1</a>
+                                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                                            <i class="ki ki-bold-arrow-next icon-xs"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                                            <i class="ki ki-bold-double-arrow-next icon-xs"></i>
+                                        </a>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary"
+                                                style="width: 75px;">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                        <span class="text-muted">Per Page</span>
+                                    </div>
                                 </div>
-                                <div class="d-flex align-items-center">
-                                    <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary"
-                                            style="width: 75px;">
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>
-                                    <span class="text-muted">Per Page</span>
-                                </div>
+                                <!--end::Pagination-->
                             </div>
-                            <!--end::Pagination-->
+                            <!--end::Container-->
                         </div>
-                        <!--end::Container-->
+                        <!--end::Entry-->
                     </div>
-                    <!--end::Entry-->
-                </div>
-                <!--end::Content-->
+                    <!--end::Content-->
+
+                {% endblock %}
                 <!--begin::Footer-->
                 <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
                     <!--begin::Container-->
