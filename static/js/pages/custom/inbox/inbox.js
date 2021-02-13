@@ -52,7 +52,7 @@ var KTAppInbox = function() {
                 email: 'chris.muller@wix.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_11.jpg',
+                pic: './assets/media/users/11.jpg',
                 class: 'tagify__tag--primary'
             }, {
                 value: 'Nick Bold',
@@ -65,31 +65,31 @@ var KTAppInbox = function() {
                 email: 'alon@keenthemes.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_6.jpg'
+                pic: './assets/media/users/6.jpg'
             }, {
                 value: 'Sam Seanic',
                 email: 'sam.senic@loop.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_8.jpg'
+                pic: './assets/media/users/8.jpg'
             }, {
                 value: 'Sara Loran',
                 email: 'sara.loran@tilda.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_9.jpg'
+                pic: './assets/media/users/9.jpg'
             }, {
                 value: 'Eric Davok',
                 email: 'davok@mix.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_13.jpg'
+                pic: './assets/media/users/13.jpg'
             }, {
                 value: 'Sam Seanic',
                 email: 'sam.senic@loop.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_13.jpg'
+                pic: './assets/media/users/13.jpg'
             }, {
                 value: 'Lina Nilson',
                 email: 'lina.nilson@loop.com',
@@ -139,7 +139,7 @@ var KTAppInbox = function() {
                 email: 'chris.muller@wix.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_11.jpg',
+                pic: './assets/media/users/11.jpg',
                 class: 'tagify__tag--primary'
             }, {
                 value: 'Nick Bold',
@@ -152,31 +152,31 @@ var KTAppInbox = function() {
                 email: 'alon@keenthemes.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_6.jpg'
+                pic: './assets/media/users/6.jpg'
             }, {
                 value: 'Sam Seanic',
                 email: 'sam.senic@loop.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_8.jpg'
+                pic: './assets/media/users/8.jpg'
             }, {
                 value: 'Sara Loran',
                 email: 'sara.loran@tilda.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_9.jpg'
+                pic: './assets/media/users/9.jpg'
             }, {
                 value: 'Eric Davok',
                 email: 'davok@mix.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_13.jpg'
+                pic: './assets/media/users/13.jpg'
             }, {
                 value: 'Sam Seanic',
                 email: 'sam.senic@loop.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_13.jpg'
+                pic: './assets/media/users/13.jpg'
             }, {
                 value: 'Lina Nilson',
                 email: 'lina.nilson@loop.com',
@@ -226,7 +226,7 @@ var KTAppInbox = function() {
                 email: 'chris.muller@wix.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_11.jpg',
+                pic: './assets/media/users/11.jpg',
                 class: 'tagify__tag--primary'
             }, {
                 value: 'Nick Bold',
@@ -239,31 +239,31 @@ var KTAppInbox = function() {
                 email: 'alon@keenthemes.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_6.jpg'
+                pic: './assets/media/users/6.jpg'
             }, {
                 value: 'Sam Seanic',
                 email: 'sam.senic@loop.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_8.jpg'
+                pic: './assets/media/users/8.jpg'
             }, {
                 value: 'Sara Loran',
                 email: 'sara.loran@tilda.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_9.jpg'
+                pic: './assets/media/users/9.jpg'
             }, {
                 value: 'Eric Davok',
                 email: 'davok@mix.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_13.jpg'
+                pic: './assets/media/users/13.jpg'
             }, {
                 value: 'Sam Seanic',
                 email: 'sam.senic@loop.com',
                 initials: '',
                 initialsState: '',
-                pic: './assets/media/users/100_13.jpg'
+                pic: './assets/media/users/13.jpg'
             }, {
                 value: 'Lina Nilson',
                 email: 'lina.nilson@loop.com',

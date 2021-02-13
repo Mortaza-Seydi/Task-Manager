@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from .models import MyUser
 
 
 def index(request):
@@ -49,6 +50,10 @@ class SignUp(View):
 
             user = User.objects.create_user(username, email, password)
             user.save()
+
+            pf_url = '/media/users/'
+            pf = MyUser(user=user, profile_photo=pf_url)
+            pf.save()
 
             return redirect('boards')
 

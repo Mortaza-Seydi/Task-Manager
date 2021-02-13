@@ -9982,7 +9982,7 @@ var KTLayoutChat = function () {
 		html += '		<a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-h6">You</a>';
 		html += '	</div>';
 		html += '	<div class="symbol symbol-circle symbol-40 ml-3">';
-		html += '		<img alt="Pic" src="assets/media/users/300_12.jpg"/>';
+		html += '		<img alt="Pic" src="assets/media/users/26.jpg"/>';
 		html += '	</div>';
 		html += '</div>';
 		html += '<div class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">' + textarea.value + '</div>';
@@ -10004,7 +10004,7 @@ var KTLayoutChat = function () {
 			var html = '';
 			html += '<div class="d-flex align-items-center">';
 			html += '	<div class="symbol symbol-circle symbol-40 mr-3">';
-			html += '		<img alt="Pic" src="assets/media/users/300_12.jpg"/>';
+			html += '		<img alt="Pic" src="assets/media/users/26.jpg"/>';
 			html += '	</div>';
 			html += '	<div>';
 			html += '		<a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-h6">Matt Pears</a>';
