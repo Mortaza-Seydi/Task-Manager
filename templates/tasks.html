@@ -107,7 +107,7 @@
                                                     <div class="form-group">
                                                         <label>Select User
                                                             <span class="text-danger">*</span></label><br>
-                                                        <select name="users" style="opacity: 1"
+                                                        <select name="users" style="width: 100%"
                                                                 class="form-control form-control-lg select2"
                                                                 id="kt_select2_3"
                                                                 name="param">
@@ -121,7 +121,7 @@
                                                                 class="btn btn-light-primary font-weight-bold"
                                                                 data-dismiss="modal">Close
                                                         </button>
-                                                        <button type="submit"
+                                                        <button id="psubmit" type="submit"
                                                                 class="btn btn-primary font-weight-bold">Save
                                                             changes
                                                         </button>
@@ -323,7 +323,6 @@
                     dragendEl: function (el) {
                         let eid = $(el).data("eid");
                         let bid = $(el.parentElement.parentElement).data("id");
-                        console.log();
                         jQuery.ajax(`/boards/${eid}/task`, {
                             headers: {"X-CSRFToken": $(`{% csrf_token %}`).val()},
                             type: 'POST',

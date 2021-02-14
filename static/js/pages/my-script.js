@@ -115,11 +115,51 @@ var KTFormWidgetsValidation = function () {
                     submitButton: new FormValidation.plugins.SubmitButton(),
 
                     // Submit the form when all fields are valid
-                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+
+                    bootstrap: new FormValidation.plugins.Bootstrap()
 
                 }
             }
         );
+
+        $('#psubmit').on('click', function (e, options) {
+            options = options || {};
+
+            if (!options.flag) {
+                e.preventDefault();
+
+                validator.validate().then(function (status) {
+                    if (status == 'Valid') {
+                        swal.fire({
+                            text: "All is cool! Now you submit this form",
+                            icon: "success",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        }).then(function () {
+                            $('#psubmit').trigger('click', {flag: true});
+                        });
+                    } else {
+                        swal.fire({
+                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn font-weight-bold btn-light-primary"
+                            }
+                        }).then(function () {
+                            KTUtil.scrollTop();
+                        });
+                    }
+                });
+            } else {
+                $("#add_board_from").submit();
+            }
+        });
     }
 
     return {

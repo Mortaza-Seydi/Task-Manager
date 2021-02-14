@@ -43,7 +43,8 @@ var KTLogin = function () {
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
                     submitButton: new FormValidation.plugins.SubmitButton(),
-                    //defaultSubmit: new FormValidation.plugins.DefaultSubmit(), // Uncomment this line to enable normal button submit after form validation
+                    //defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    // Uncomment this line to enable normal button submit after form validation
                     bootstrap: new FormValidation.plugins.Bootstrap()
                 }
             }
@@ -63,14 +64,27 @@ var KTLogin = function () {
                             confirmButton: "btn font-weight-bold btn-light-primary"
                         }
                     }).then(function () {
-                        jQuery.ajax(window.location.href, {
+                        jQuery.ajax('/signIn', {
                             type: "POST",
                             data: $("#kt_login_signin_form").serialize(),
                             success: (data) => {
                                 window.location.replace('/')
                             },
                             error: function (data) {
-                                alert(data.responseJSON.error);
+                                $('[data-switch=true]').bootstrapSwitch();
+                                let content = {};
+                                content.message = data.responseJSON.error;
+                                $.notify(content, {
+                                    type: 'danger',
+                                    placement: {
+                                        from: 'top',
+                                        align: 'left'
+                                    },
+                                    offset: {
+                                        x: 30,
+                                        y: 30
+                                    },
+                                });
                             }
                         });
                     });
@@ -112,7 +126,7 @@ var KTLogin = function () {
             form,
             {
                 fields: {
-                    fullname: {
+                    username: {
                         validators: {
                             notEmpty: {
                                 message: 'Username is required'
@@ -178,14 +192,27 @@ var KTLogin = function () {
                             confirmButton: "btn font-weight-bold btn-light-primary"
                         }
                     }).then(function () {
-                        jQuery.ajax(window.location.href + '/signUp', {
+                        jQuery.ajax('/signUp', {
                             type: "POST",
                             data: $("#kt_login_signup_form").serialize(),
                             success: (data) => {
                                 window.location.replace('/')
                             },
                             error: function (data) {
-                                alert(data.responseJSON.error);
+                                $('[data-switch=true]').bootstrapSwitch();
+                                let content = {};
+                                content.message = data.responseJSON.error;
+                                $.notify(content, {
+                                    type: 'danger',
+                                    placement: {
+                                        from: 'top',
+                                        align: 'left'
+                                    },
+                                    offset: {
+                                        x: 30,
+                                        y: 30
+                                    },
+                                });
                             }
                         });
                     });

@@ -51,6 +51,15 @@ class Projects(View):
         return redirect('boards')
 
 
+class MangeProject(View):
+    def post(self, request, id):
+        Project.objects.filter(id=id).delete()
+
+        response = JsonResponse({"message": "OK"})
+        response.status_code = 200
+        return response
+
+
 class Tasks(View):
     def get(self, request, id):
         if not request.user.is_authenticated:

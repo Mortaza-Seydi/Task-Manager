@@ -157,7 +157,7 @@
                                                                         class="btn btn-light-primary font-weight-bold"
                                                                         data-dismiss="modal">Close
                                                                 </button>
-                                                                <button type="submit"
+                                                                <button id="psubmit" type="submit"
                                                                         class="btn btn-primary font-weight-bold">Save
                                                                     changes
                                                                 </button>
@@ -222,7 +222,8 @@
                                                             <!--begin::Navigation-->
                                                             <ul class="navi navi-hover">
                                                                 <li class="navi-item">
-                                                                    <a href="#" class="navi-link">
+                                                                    <a href="javascript:void(0)"
+                                                                       id="{{ proj.id }}/delete" class="navi-link aff">
 																			<span class="navi-icon">
 																				<i class="flaticon2-delete"></i>
 																			</span>
@@ -294,33 +295,37 @@
 
                                 <!--begin::Pagination-->
                                 <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                    <div class="d-flex flex-wrap mr-3">
-                                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                            <i class="ki ki-bold-double-arrow-back icon-xs"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                            <i class="ki ki-bold-arrow-back icon-xs"></i>
-                                        </a>
-                                        <a href="#"
-                                           class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">1</a>
-                                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                            <i class="ki ki-bold-arrow-next icon-xs"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
-                                            <i class="ki ki-bold-double-arrow-next icon-xs"></i>
-                                        </a>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary"
-                                                style="width: 75px;">
-                                            <option value="10">10</option>
-                                            <option value="20">20</option>
-                                            <option value="30">30</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                        <span class="text-muted">Per Page</span>
-                                    </div>
+                                    {% for proj in projects %}
+                                        {% if forloop.first %}
+                                            <div class="d-flex flex-wrap mr-3">
+                                                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                                                    <i class="ki ki-bold-double-arrow-back icon-xs"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                                                    <i class="ki ki-bold-arrow-back icon-xs"></i>
+                                                </a>
+                                                <a href="#"
+                                                   class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">1</a>
+                                                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                                                    <i class="ki ki-bold-arrow-next icon-xs"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1">
+                                                    <i class="ki ki-bold-double-arrow-next icon-xs"></i>
+                                                </a>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary"
+                                                        style="width: 75px;">
+                                                    <option value="10">10</option>
+                                                    <option value="20">20</option>
+                                                    <option value="30">30</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>
+                                                <span class="text-muted">Per Page</span>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                                 <!--end::Pagination-->
                             </div>
@@ -519,4 +524,44 @@
 
 {% block js %}
     <script src="{% static '/js/pages/my-script.js' %}"></script>
+    <script>
+        $('.aff').on("click", function () {
+            var $div = $(this);
+            swal.fire({
+                text: "Are You Sure ?",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok!",
+                customClass: {
+                    confirmButton: "btn font-weight-bold btn-light-primary"
+                }
+            }).then(function () {
+                let url = $div.attr('id');
+
+                $.ajax(`/boards/${url}`, {
+                    headers: {"X-CSRFToken": $(`{% csrf_token %}`).val()},
+                    type: "POST",
+                    success: (data) => {
+                        window.location.replace('/')
+                    },
+                    error: function (data) {
+                        $('[data-switch=true]').bootstrapSwitch();
+                        let content = {};
+                        content.message = data.responseJSON.error;
+                        $.notify(content, {
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'left'
+                            },
+                            offset: {
+                                x: 30,
+                                y: 30
+                            },
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
