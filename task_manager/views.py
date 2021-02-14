@@ -5,6 +5,18 @@ from django.db.models import Q
 from .models import Task, Project
 from django.http import JsonResponse
 import json, random, datetime
+from reports.views import ProjectInfo
+
+
+class ProjectDetails:
+    def __init__(self, project):
+        self.project = project
+        self.progress = ProjectInfo(project).progress
+        self.users = [self.project.owner]
+        self.tasks = len(self.project.task_set.all())
+        for id in self.project.get_members():
+            user = User.objects.filter(id=id).first()
+            self.users.append(user)
 
 
 class Projects(View):
@@ -18,7 +30,7 @@ class Projects(View):
 
         for p in projects:
             if p.owner == user or user.id in p.get_members():
-                list.append(p)
+                list.append(ProjectDetails(p))
 
         data = {"user": user,
                 "first": user.username[0],
@@ -72,6 +84,7 @@ class Tasks(View):
                 "first": user.username[0],
                 "other_users": users,
                 "tasks": proj.task_set.all(),
+                'proj': proj,
                 "can_add": user == proj.owner
                 }
         return render(request, 'tasks.html', data)

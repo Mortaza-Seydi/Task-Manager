@@ -194,7 +194,7 @@
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Pic-->
                                                 <div class="flex-shrink-0 mr-4 symbol symbol-60 symbol-circle">
-                                                    <img src="/static{{ proj.profile_photo }}"
+                                                    <img src="{% static proj.project.profile_photo %}"
                                                          alt="image"/>
                                                 </div>
                                                 <!--end::Pic-->
@@ -202,9 +202,9 @@
                                                 <div class="d-flex flex-column mr-auto">
                                                     <!--begin: Title-->
                                                     <div class="d-flex flex-column mr-auto">
-                                                        <a href="/boards/{{ proj.id }}"
-                                                           class="text-dark text-hover-primary font-size-h4 font-weight-bolder mb-1">{{ proj.name }}</a>
-                                                        <span class="text-muted font-weight-bold">{{ proj.description }}</span>
+                                                        <a href="/boards/{{ proj.project.id }}"
+                                                           class="text-dark text-hover-primary font-size-h4 font-weight-bolder mb-1">{{ proj.project.name }}</a>
+                                                        <span class="text-muted font-weight-bold">{{ proj.project.description }}</span>
                                                     </div>
                                                     <!--end::Title-->
                                                 </div>
@@ -224,7 +224,8 @@
                                                             <ul class="navi navi-hover">
                                                                 <li class="navi-item">
                                                                     <a href="javascript:void(0)"
-                                                                       id="{{ proj.id }}/delete" class="navi-link aff">
+                                                                       id="{{ proj.project.id }}/delete"
+                                                                       class="navi-link aff">
 																			<span class="navi-icon">
 																				<i class="flaticon2-delete"></i>
 																			</span>
@@ -240,7 +241,7 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Description-->
-                                            <div class="mb-10 mt-5 font-weight-bold">{{ proj.details }}</div>
+                                            <div class="mb-10 mt-5 font-weight-bold">{{ proj.project.details }}</div>
                                             <!--end::Description-->
                                             <!--begin::Progress-->
                                             <div class="d-flex mb-5 align-items-cente">
@@ -248,42 +249,24 @@
                                                 <div class="d-flex flex-row-fluid align-items-center">
                                                     <div class="progress progress-xs mt-2 mb-2 w-100">
                                                         <div class="progress-bar bg-success" role="progressbar"
-                                                             style="width: 59%;" aria-valuenow="50"
-                                                             aria-valuemin="0"
+                                                             style="width: {{ proj.progress }}%;" aria-valuenow="50" aria-valuemin="0"
                                                              aria-valuemax="100"></div>
                                                     </div>
-                                                    <span class="ml-3 font-weight-bolder">59%</span>
+                                                    <span class="ml-3 font-weight-bolder">{{ proj.progress }}%</span>
                                                 </div>
                                             </div>
                                             <!--ebd::Progress-->
                                             <div class="d-flex flex-column flex-lg-fill float-left mb-7">
                                                 <span class="font-weight-bolder mb-4">Members</span>
                                                 <div class="symbol-group symbol-hover">
-                                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
-                                                         title="" data-original-title="Markgbgfb Stone">
-                                                        <img alt="Pic"
-                                                             src="/static/media/users/25.jpg">
-                                                    </div>
-                                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
-                                                         title="" data-original-title="Charlie Stone">
-                                                        <img alt="Pic"
-                                                             src="/static/media/users/30.jpg">
-                                                    </div>
-                                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
-                                                         title="" data-original-title="Luca Doncic">
-                                                        <img alt="Pic"
-                                                             src="/static/media/users/28.jpg">
-                                                    </div>
-                                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
-                                                         title="" data-original-title="Nick Mana">
-                                                        <img alt="Pic"
-                                                             src="/static/media/users/29.jpg">
-                                                    </div>
-                                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
-                                                         title="" data-original-title="Teresa Fox">
-                                                        <img alt="Pic"
-                                                             src="/static/media/users/20.jpg">
-                                                    </div>
+                                                    {% for user in proj.users %}
+                                                        <div class="symbol symbol-30 symbol-circle"
+                                                             data-toggle="tooltip"
+                                                             title="" data-original-title="{{ user.username }}">
+                                                            <img alt="Pic"
+                                                                 src="{% static user.profile.profile_photo %}">
+                                                        </div>
+                                                    {% endfor %}
                                                 </div>
                                             </div>
 
@@ -309,9 +292,9 @@
 															</svg>
                                                             <!--end::Svg Icon-->
 														</span>
-                                                    <a href="/boards/{{ proj.id }}"
+                                                    <a href="/boards/{{ proj.project.id }}"
                                                        class="font-weight-bolder text-primary ml-2">
-                                                        Tasks</a>
+                                                        {{ proj.tasks }} Tasks</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -412,7 +395,7 @@
             <div class="d-flex align-items-center mt-5">
                 <div class="symbol symbol-100 mr-5">
                     <div class="symbol-label"
-                         style="background-image:url(/static{{ user.profile.profile_photo }})"></div>
+                         style="background-image:url({% static user.profile.profile_photo %})"></div>
                     <i class="symbol-badge bg-success"></i>
                 </div>
                 <div class="d-flex flex-column">

@@ -64,6 +64,7 @@
                     <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
                         <div class="col-md-9">
                             <div class="table-responsive">
+                                <span class="font-weight-bolder font-size-h3 mb-6">All Projects status :</span>
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -125,16 +126,49 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+                        <div class="col-md-9">
+                            <div class="table-responsive">
+                                <span class="font-weight-bolder font-size-h3 mb-2">User Status in Projects :</span>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 font-weight-bold text-muted text-uppercase">Project</th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">TO DO</th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">Doing</th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">Done
+                                        </th>
+                                        <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">PROGRESS
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for u in u_in_p %}
+                                        <tr class="font-weight-boldest border-bottom-0 font-size-lg">
+                                            <td class="border-top-0 pl-0 py-4">{{ u.name }}</td>
+                                            <td class="border-top-0 text-right py-4">{{ u.u_info.todo }}</td>
+                                            <td class="border-top-0 text-right py-4">{{ u.u_info.doing }}</td>
+                                            <td class="border-top-0 text-right py-4">{{ u.u_info.done }}</td>
+                                            <td class="text-danger border-top-0 pr-0 py-4 text-right">{{ u.u_info.progress }}
+                                                %
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     <!-- end: Invoice footer-->
                     <!-- begin: Invoice action-->
                     <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
                         <div class="col-md-9">
                             <div class="d-flex justify-content-between">
-                                <button type="button" class="btn btn-light-primary font-weight-bold"
-                                        onclick="window.print();">Download Invoice
-                                </button>
+                                <a href="/boards" class="btn btn-light-primary font-weight-bold">Back
+                                </a>
                                 <button type="button" class="btn btn-primary font-weight-bold"
-                                        onclick="window.print();">Print Invoice
+                                        onclick="window.print();">Download Report
                                 </button>
                             </div>
                         </div>

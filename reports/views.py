@@ -5,8 +5,7 @@ from task_manager.models import Project, Task, User
 
 
 class ProjectInfo:
-    def __init__(self, id):
-        project = Project.objects.filter(id=id).first()
+    def __init__(self, project):
         self.name = project.name
         all_tasks = project.task_set.all()
 
@@ -31,7 +30,7 @@ class ProjectInfo:
         all_tasks = self.t + self.d + self.i + self.o
 
         if all_tasks != 0:
-            self.progress = (self.o * 100) / all_tasks
+            self.progress = int((self.o * 100) / all_tasks)
         else:
             self.progress = 0
 
@@ -63,9 +62,16 @@ class UserInfo:
         all_tasks = self.todo + self.doing + self.done
 
         if all_tasks != 0:
-            self.progress = (self.done * 100) / all_tasks
+            self.progress = int((self.done * 100) / all_tasks)
         else:
             self.progress = 0
+
+
+class UserInProject:
+    def __init__(self, user, project):
+        self.u_info = UserInfo(user)
+        self.name = project.name
+        self.u_info.analyze_project(project)
 
 
 class Report(View):
@@ -77,17 +83,20 @@ class Report(View):
         projects = Project.objects.all()
         p_info_list = []
         u_info = UserInfo(user)
+        user_in_projects = []
 
         for p in projects:
             if p.owner == user or user.id in p.get_members():
-                p_info = ProjectInfo(p.id)
+                p_info = ProjectInfo(p)
                 u_info.analyze_project(p)
                 p_info_list.append(p_info)
+                user_in_projects.append(UserInProject(user, p))
 
         data = {"user": user,
                 "first": user.username[0],
-                "u_info": u_info,
                 "p_info": p_info_list,
+                "u_info": u_info,
+                "u_in_p": user_in_projects,
                 'time': datetime.today()
                 }
         return render(request, 'report.html', data)

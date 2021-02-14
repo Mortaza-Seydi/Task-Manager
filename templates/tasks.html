@@ -20,7 +20,7 @@
                     <!--begin::Heading-->
                     <div class="d-flex flex-column">
                         <!--begin::Title-->
-                        <h2 class="text-white font-weight-bold my-2 mr-5">Tasks</h2>
+                        <h2 class="text-white font-weight-bold my-2 mr-5">Tasks in "{{ proj.name }}"</h2>
                         <!--end::Title-->
                         <!--begin::Breadcrumb-->
                         <div class="d-flex align-items-center font-weight-bold my-2">
@@ -172,7 +172,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="symbol symbol-100 mr-5">
                                     <div class="symbol-label"
-                                         style="background-image:url(/static{{ t.assigned_to.profile.profile_photo }})"></div>
+                                         style="background-image:url({% static t.assigned_to.profile.profile_photo %})"></div>
                                     <i class="symbol-badge bg-success"></i>
                                 </div>
                                 <div class="d-flex flex-column">
