@@ -155,6 +155,62 @@
             <!--end::Container-->
         </div>
 
+        {% for t in tasks %}
+            <div class="modal fade hidden" id="task-details-{{ t.id }}" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{ t.description }}</h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <i aria-hidden="true" class="ki ki-close"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex align-items-center">
+                                <div class="symbol symbol-100 mr-5">
+                                    <div class="symbol-label"
+                                         style="background-image:url(/static{{ t.assigned_to.profile.profile_photo }})"></div>
+                                    <i class="symbol-badge bg-success"></i>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a href="#"
+                                       class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ t.assigned_to.username }}</a>
+                                    <div class="navi mt-2">
+                                        <a href="#" class="navi-item">
+								<span class="navi-link p-0 pb-2">
+									<span class="navi-icon mr-1">
+										<span class="svg-icon svg-icon-lg svg-icon-primary">
+											<!--begin::Svg Icon | path:/media/svg/icons/Communication/Mail-notification.svg-->
+											<svg xmlns="http://www.w3.org/2000/svg"
+                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                 viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24"/>
+													<path d="M21,12.0829584 C20.6747915,12.0283988 20.3407122,12 20,12 C16.6862915,12 14,14.6862915 14,18 C14,18.3407122 14.0283988,18.6747915 14.0829584,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12.0829584 Z M18.1444251,7.83964668 L12,11.1481833 L5.85557487,7.83964668 C5.4908718,7.6432681 5.03602525,7.77972206 4.83964668,8.14442513 C4.6432681,8.5091282 4.77972206,8.96397475 5.14442513,9.16035332 L11.6444251,12.6603533 C11.8664074,12.7798822 12.1335926,12.7798822 12.3555749,12.6603533 L18.8555749,9.16035332 C19.2202779,8.96397475 19.3567319,8.5091282 19.1603533,8.14442513 C18.9639747,7.77972206 18.5091282,7.6432681 18.1444251,7.83964668 Z"
+                                                          fill="#000000"/>
+													<circle fill="#000000" opacity="0.3" cx="19.5" cy="17.5" r="2.5"/>
+												</g>
+											</svg>
+                                            <!--end::Svg Icon-->
+										</span>
+									</span>
+									<span class="navi-text text-muted text-hover-primary">{{ t.assigned_to.email }}</span>
+								</span>
+                                        </a>
+                                    </div>
+
+                                    <span class="label label-inline label-light-info">Start Time: {{ t.start_time }}</span>
+                                    <span class="label label-inline label-light-success">End Time: {{ t.end_time }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
         <!--end::Entry-->
     </div>
     <!--end::Content-->
@@ -177,7 +233,8 @@
                     element: '#kt_kanban_4',
                     gutter: '0',
                     click: function (el) {
-                        alert("Details");
+                        let eid = $(el).data("eid");
+                        $(`#task-details-${eid}`).modal('show');
                     },
                     boards: [
                         {
@@ -192,7 +249,7 @@
                                             'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
+                        	            <img alt="Pic" src="{% static t.assigned_to.profile.profile_photo %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -215,7 +272,7 @@
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
+                        	            <img alt="Pic" src="{% static t.assigned_to.profile.profile_photo %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -238,7 +295,7 @@
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
+                        	            <img alt="Pic" src="{% static t.assigned_to.profile.profile_photo %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -261,7 +318,7 @@
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
+                        	            <img alt="Pic" src="{% static t.assigned_to.profile.profile_photo %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -284,7 +341,7 @@
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
+                        	            <img alt="Pic" src="{% static t.assigned_to.profile.profile_photo %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -307,7 +364,7 @@
                                         'title': `
                                 <div class="d-flex align-items-center">
                         	        <div class="symbol symbol-success mr-3">
-                        	            <img alt="Pic" src="/static{{ t.assigned_to.profile.profile_photo }}" />
+                        	            <img alt="Pic" src="{% static t.assigned_to.profile.profile_photo %}" />
                         	        </div>
                         	        <div class="d-flex flex-column align-items-start">
                         	            <span class="text-dark-50 font-weight-bold mb-1">{{t.name}}</span>
@@ -332,7 +389,20 @@
                                 board_id: bid
                             },
                             error: (data) => {
-                                alert(data.responseJSON.error);
+                                $('[data-switch=true]').bootstrapSwitch();
+                                let content = {};
+                                content.message = data.responseJSON.error;
+                                $.notify(content, {
+                                    type: 'danger',
+                                    placement: {
+                                        from: 'bottom',
+                                        align: 'left'
+                                    },
+                                    offset: {
+                                        x: 30,
+                                        y: 30
+                                    },
+                                });
                             }
                         })
                     },
@@ -396,7 +466,24 @@
                                     title: '{{t.name}}',
                                     start: new Date('{{ t.end_time }}'),
                                     description: '{{t.description}}',
-                                    className: "fc-event-light fc-event-solid-primary"
+                                    {% if t.status == 'T' %}
+                                        className: "fc-event-solid-warning fc-event-light",
+                                    {% endif %}
+                                    {% if t.status == 'D' %}
+                                        className: "fc-event-solid-primary fc-event-light",
+                                    {% endif %}
+                                    {% if t.status == 'I' %}
+                                        className: "fc-event-solid-info fc-event-light",
+                                    {% endif %}
+                                    {% if t.status == 'O' %}
+                                        className: "fc-event-solid-success fc-event-light",
+                                    {% endif %}
+                                    {% if t.status == 'B' %}
+                                        className: "fc-event-solid-danger fc-event-light",
+                                    {% endif %}
+                                    {% if t.status == 'L' %}
+                                        className: "fc-event-solid-dark  fc-event-light",
+                                    {% endif %}
                                 },
                             {% endfor %}
                         ],

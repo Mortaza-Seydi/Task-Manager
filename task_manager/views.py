@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Task, Project
 from django.http import JsonResponse
-import json, random
+import json, random, datetime
 
 
 class Projects(View):
@@ -111,6 +111,7 @@ class ManegeTasks(View):
             if user == task.project.owner:
                 task.status = status
                 task.save()
+
             else:
                 response = JsonResponse({"error": "You Do Not Have Permission"})
                 response.status_code = 403
@@ -118,6 +119,8 @@ class ManegeTasks(View):
         else:
             if user == task.assigned_to or user == task.project.owner:
                 task.status = status
+                if status == 'D':
+                    task.start_time = datetime.datetime.today().date()
                 task.save()
             else:
                 response = JsonResponse({"error": "You Do Not Have Permission"})
