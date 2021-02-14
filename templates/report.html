@@ -17,28 +17,44 @@
                          style="background-image: url({% static '/media/bg/bg-6.jpg' %});">
                         <div class="col-md-9">
                             <div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row">
-                                <h1 class="display-4 text-white font-weight-boldest mb-10">INVOICE</h1>
+                                <h1 class="display-4 text-white font-weight-boldest mb-10">Report</h1>
                                 <div class="d-flex flex-column align-items-md-end px-0">
                                     <span class="text-white d-flex flex-column align-items-md-end opacity-70">
-															<span>Cecilia Chapman, 711-2880 Nulla St, Mankato</span>
-															<span>Mississippi 96522</span>
+															<span>Kanban Task Manager</span>
+															<span>Version 1.0</span>
 														</span>
                                 </div>
                             </div>
                             <div class="border-bottom w-100 opacity-20"></div>
                             <div class="d-flex justify-content-between text-white pt-6">
                                 <div class="d-flex flex-column flex-root">
-                                    <span class="font-weight-bolde mb-2r">DATA</span>
-                                    <span class="opacity-70">Dec 12, 2017</span>
+                                    <span class="font-weight-bolde mb-2r">DATA & TIME</span>
+                                    <span class="opacity-70">{{ time }}</span>
                                 </div>
                                 <div class="d-flex flex-column flex-root">
-                                    <span class="font-weight-bolder mb-2">INVOICE NO.</span>
-                                    <span class="opacity-70">GS 000014</span>
+                                    <span class="font-weight-bolder mb-2">GENERATED FOR USER</span>
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-50 mr-5">
+                                            <div class="symbol-label"
+                                                 style="background-image:url({% static user.profile.profile_photo %})"></div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <a href="#"
+                                               class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{ user.username }}</a>
+                                            <div class="navi mt-2">
+                                                <a href="#" class="navi-item">
+                                                    <span class="navi-link p-0 pb-2">
+                                                        <span class="navi-text text-muted text-hover-primary">{{ user.email }}</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="d-flex flex-column flex-root">
-                                    <span class="font-weight-bolder mb-2">INVOICE TO.</span>
-                                    <span class="opacity-70">Iris Watson, P.O. Box 283 8562 Fusce RD.
-														<br>Fredrick Nebraska 20620</span>
+                                    <span class="font-weight-bolder mb-2">INCLUDING</span>
+                                    <span class="opacity-70">Projects Summary<br>User Summary</span>
                                 </div>
                             </div>
                         </div>
@@ -51,32 +67,31 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="pl-0 font-weight-bold text-muted text-uppercase">Description</th>
-                                        <th class="text-right font-weight-bold text-muted text-uppercase">Hours</th>
-                                        <th class="text-right font-weight-bold text-muted text-uppercase">Rate</th>
-                                        <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Amount
+                                        <th class="pl-0 font-weight-bold text-muted text-uppercase">Project</th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">TO DO</th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">In Progress
+                                        </th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">In Test
+                                        </th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">Done
+                                        </th>
+                                        <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">PROGRESS
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="font-weight-boldest font-size-lg">
-                                        <td class="pl-0 pt-7">Creative Design</td>
-                                        <td class="text-right pt-7">80</td>
-                                        <td class="text-right pt-7">$40.00</td>
-                                        <td class="text-danger pr-0 pt-7 text-right">$3200.00</td>
-                                    </tr>
-                                    <tr class="font-weight-boldest border-bottom-0 font-size-lg">
-                                        <td class="border-top-0 pl-0 py-4">Front-End Development</td>
-                                        <td class="border-top-0 text-right py-4">120</td>
-                                        <td class="border-top-0 text-right py-4">$40.00</td>
-                                        <td class="text-danger border-top-0 pr-0 py-4 text-right">$4800.00</td>
-                                    </tr>
-                                    <tr class="font-weight-boldest border-bottom-0 font-size-lg">
-                                        <td class="border-top-0 pl-0 py-4">Back-End Development</td>
-                                        <td class="border-top-0 text-right py-4">210</td>
-                                        <td class="border-top-0 text-right py-4">$60.00</td>
-                                        <td class="text-danger border-top-0 pr-0 py-4 text-right">$12600.00</td>
-                                    </tr>
+                                    {% for p in p_info %}
+                                        <tr class="font-weight-boldest border-bottom-0 font-size-lg">
+                                            <td class="border-top-0 pl-0 py-4">{{ p.name }}</td>
+                                            <td class="border-top-0 text-right py-4">{{ p.t }}</td>
+                                            <td class="border-top-0 text-right py-4">{{ p.d }}</td>
+                                            <td class="border-top-0 text-right py-4">{{ p.i }}</td>
+                                            <td class="border-top-0 text-right py-4">{{ p.o }}</td>
+                                            <td class="text-danger border-top-0 pr-0 py-4 text-right">{{ p.progress }}
+                                                %
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -88,24 +103,24 @@
                         <div class="col-md-9">
                             <div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
                                 <div class="d-flex flex-column mb-10 mb-md-0">
-                                    <div class="font-weight-bolder font-size-lg mb-3">BANK TRANSFER</div>
+                                    <div class="font-weight-bolder font-size-lg mb-3">User Summary :</div>
                                     <div class="d-flex justify-content-between mb-3">
-                                        <span class="mr-15 font-weight-bold">Account Name:</span>
-                                        <span class="text-right">Barclays UK</span>
+                                        <span class="mr-15 font-weight-bold">All TO DO Tasks :</span>
+                                        <span class="text-right">{{ u_info.todo }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between mb-3">
-                                        <span class="mr-15 font-weight-bold">Account Number:</span>
-                                        <span class="text-right">1234567890934</span>
+                                        <span class="mr-15 font-weight-bold">All Doing Tasks:</span>
+                                        <span class="text-right">{{ u_info.doing }}</span>
                                     </div>
                                     <div class="d-flex justify-content-between">
-                                        <span class="mr-15 font-weight-bold">Code:</span>
-                                        <span class="text-right">BARC0032UK</span>
+                                        <span class="mr-15 font-weight-bold">All Done Tasks :</span>
+                                        <span class="text-right">{{ u_info.done }}</span>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-column text-md-right">
-                                    <span class="font-size-lg font-weight-bolder mb-1">TOTAL AMOUNT</span>
-                                    <span class="font-size-h2 font-weight-boldest text-danger mb-1">$20.600.00</span>
-                                    <span>Taxes Included</span>
+                                    <span class="font-size-lg font-weight-bolder mb-1">PROGRESS</span>
+                                    <span class="font-size-h2 font-weight-boldest text-danger mb-1">{{ u_info.progress }} %</span>
+                                    <span>Including All Tasks in All Projects</span>
                                 </div>
                             </div>
                         </div>
