@@ -11,23 +11,23 @@
 
 4- `python manage.py runserver`
 
-## Photos
+# Photos
 
-### you can SignIn or SignUp 
+## you can SignIn or SignUp 
 
 ![login](preview/login.png)
 
-### in this page you can create your teams or projects and add it's members from registered users.
-### this project is available for other members.
+## in this page you can create your teams or projects and add it's members from registered users.
+## this project is available for other members.
 
 ![projects](preview/projects.png)
 
-### in this page admin user (creator of project or team) can add task and assign it to members and himself. 
-### you can see the deadline of tasks in calender and task details. notice only admin can drag tasks in calender to change it's deadline.
-### other members can drag their tasks in task board to change their status. 
+## in this page admin user (creator of project or team) can add task and assign it to members and himself. 
+## you can see the deadline of tasks in calender and task details. notice only admin can drag tasks in calender to change it's deadline.
+## other members can drag their tasks in task board to change their status. 
 
 ![tasks](preview/tasks.png)
 
-### in this page user can see status or all his projects and his status in all projects.
+## in this page user can see status or all his projects and his status in all projects.
 
 ![report](preview/report.png)
