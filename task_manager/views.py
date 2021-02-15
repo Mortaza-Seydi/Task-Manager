@@ -1,22 +1,15 @@
-from django.shortcuts import render, redirect
-from django.views import View
+import datetime
+import json
+import random
+
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import Task, Project
 from django.http import JsonResponse
-import json, random, datetime
-from reports.views import ProjectInfo
+from django.shortcuts import render, redirect
+from django.views import View
 
-
-class ProjectDetails:
-    def __init__(self, project):
-        self.project = project
-        self.progress = ProjectInfo(project).progress
-        self.users = [self.project.owner]
-        self.tasks = len(self.project.task_set.all())
-        for id in self.project.get_members():
-            user = User.objects.filter(id=id).first()
-            self.users.append(user)
+from reports.models import ProjectInfo
+from .models import Task, Project
 
 
 class Projects(View):
@@ -30,7 +23,7 @@ class Projects(View):
 
         for p in projects:
             if p.owner == user or user.id in p.get_members():
-                list.append(ProjectDetails(p))
+                list.append(ProjectInfo(p))
 
         data = {"user": user,
                 "first": user.username[0],
@@ -115,31 +108,53 @@ class ManegeTasks(View):
 
         user = request.user
 
-        task_id = request.POST['task_id']
-        status = request.POST['board_id']
+        type = request.POST['type']
+        if type == 'edit_status':
+            task_id = request.POST['task_id']
+            status = request.POST['board_id']
 
-        task = Task.objects.filter(id=task_id).first()
+            task = Task.objects.filter(id=task_id).first()
 
-        if status in ['O', 'B', 'L'] or task.status in ['O', 'B', 'L']:
+            if status in ['O', 'B', 'L'] or task.status in ['O', 'B', 'L']:
+                if user == task.project.owner:
+                    task.status = status
+                    task.save()
+
+                else:
+                    response = JsonResponse({"error": "You Do Not Have Permission"})
+                    response.status_code = 403
+                    return response
+            else:
+                if user == task.assigned_to or user == task.project.owner:
+                    task.status = status
+                    if status == 'D':
+                        task.start_time = datetime.datetime.today().date()
+                    task.save()
+                else:
+                    response = JsonResponse({"error": "You Do Not Have Permission"})
+                    response.status_code = 403
+                    return response
+
+            response = JsonResponse({"message": "OK"})
+            response.status_code = 200
+            return response
+
+        if type == 'edit_end_time':
+
+            task_id = request.POST['task_id']
+            end_time = request.POST['new_end_time']
+
+            task = Task.objects.filter(id=task_id).first()
+
             if user == task.project.owner:
-                task.status = status
+                task.end_time = end_time
                 task.save()
+
+                response = JsonResponse({"message": "OK"})
+                response.status_code = 200
+                return response
 
             else:
                 response = JsonResponse({"error": "You Do Not Have Permission"})
                 response.status_code = 403
                 return response
-        else:
-            if user == task.assigned_to or user == task.project.owner:
-                task.status = status
-                if status == 'D':
-                    task.start_time = datetime.datetime.today().date()
-                task.save()
-            else:
-                response = JsonResponse({"error": "You Do Not Have Permission"})
-                response.status_code = 403
-                return response
-
-        response = JsonResponse({"message": "OK"})
-        response.status_code = 200
-        return response

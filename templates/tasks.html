@@ -385,6 +385,7 @@
                             type: 'POST',
                             data: {
                                 "_token": "{{ csrf_token }}",
+                                type: "edit_status",
                                 task_id: eid,
                                 board_id: bid
                             },
@@ -404,7 +405,7 @@
                                     },
                                 });
                             }
-                        })
+                        });
                     },
                 });
             }
@@ -457,14 +458,16 @@
                         defaultView: 'dayGridMonth',
                         defaultDate: TODAY,
 
-                        editable: false,
+                        editable: true,
                         eventLimit: true, // allow "more" link when too many events
                         navLinks: true,
                         events: [
                             {% for t in tasks %}
                                 {
+                                    id: '{{ t.id }}',
                                     title: '{{t.name}}',
                                     start: new Date('{{ t.end_time }}'),
+                                    end: new Date('{{ t.end_time }}'),
                                     description: '{{t.description}}',
                                     {% if t.status == 'T' %}
                                         className: "fc-event-solid-warning fc-event-light",
@@ -487,6 +490,41 @@
                                 },
                             {% endfor %}
                         ],
+
+                        eventDrop: function (info) {
+                            let id = info.event.id;
+                            let year = info.event.start.getFullYear();
+                            let month = info.event.start.getMonth() + 1;
+                            let day = info.event.start.getDate()
+                            console.log(id, `${year}-${month}-${day}`)
+
+                            jQuery.ajax(`/boards/${id}/task`, {
+                                headers: {"X-CSRFToken": $(`{% csrf_token %}`).val()},
+                                type: 'POST',
+                                data: {
+                                    "_token": "{{ csrf_token }}",
+                                    type: "edit_end_time",
+                                    task_id: id,
+                                    new_end_time: `${year}-${month}-${day}`
+                                },
+                                error: (data) => {
+                                    $('[data-switch=true]').bootstrapSwitch();
+                                    let content = {};
+                                    content.message = data.responseJSON.error;
+                                    $.notify(content, {
+                                        type: 'danger',
+                                        placement: {
+                                            from: 'bottom',
+                                            align: 'left'
+                                        },
+                                        offset: {
+                                            x: 30,
+                                            y: 30
+                                        },
+                                    });
+                                }
+                            });
+                        },
 
                         eventRender: function (info) {
                             var element = $(info.el);
