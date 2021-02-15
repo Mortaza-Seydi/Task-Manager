@@ -13,21 +13,18 @@
 
 # Photos
 
-## you can SignIn or SignUp 
+## You can sign in or sign up 
 
 ![login](preview/login.png)
 
-## in this page you can create your teams or projects and add it's members from registered users.
-## this project is available for other members.
+## In this page you can create your teams or projects and add it's members from registered users. This project is available for other members.
 
 ![projects](preview/projects.png)
 
-## in this page admin user (creator of project or team) can add task and assign it to members and himself. 
-## you can see the deadline of tasks in calender and task details. notice only admin can drag tasks in calender to change it's deadline.
-## other members can drag their tasks in task board to change their status. 
+## In this page admin user (creator of project or team) can add task and assign it to members and himself. You can see the deadline of tasks in calender and task details. Notice only admin can drag tasks in calender to change it's deadline. Other members can drag their tasks in task board to change their status. 
 
 ![tasks](preview/tasks.png)
 
-## in this page user can see status or all his projects and his status in all projects.
+## In this page user can see status or all his projects and his status in all projects.
 
 ![report](preview/report.png)
