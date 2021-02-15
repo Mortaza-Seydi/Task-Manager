@@ -27,7 +27,7 @@ class Projects(View):
 
         data = {"user": user,
                 "first": user.username[0],
-                "other_users": User.objects.filter(~Q(username=user.username)).all(),
+                "other_users": User.objects.filter(~Q(id=user.id)).all(),
                 "projects": list,
                 }
         return render(request, 'projects.html', data)

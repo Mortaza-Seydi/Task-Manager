@@ -79,7 +79,9 @@
                                     <!--begin::Heading-->
                                     <div class="d-flex flex-column">
                                         <!--begin::Title-->
-                                        <h2 class="text-white font-weight-bold my-2 mr-5">Projects / Teams</h2>
+                                        <h2 class="text-white font-weight-bold my-2 mr-5">Projects</h2>
+                                        <h5 class="text-success font-weight-bold">Create your Boards, Teams or Projects
+                                            Here</h5>
                                         <!--end::Title-->
                                     </div>
                                     <!--end::Heading-->
@@ -110,8 +112,7 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">New Project or
-                                                            Team
+                                                        <h5 class="modal-title" id="exampleModalLabel">New Project
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -132,14 +133,15 @@
                                                                     <span class="text-danger">*</span></label>
                                                                 <input id="idesc" name="desc" type="text"
                                                                        class="form-control form-control-lg"
-                                                                       placeholder="Used for ???">
+                                                                       placeholder="Description">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="Textarea">Details
                                                                     <span class="text-danger">*</span></label>
                                                                 <textarea name="details" class="form-control"
                                                                           id="idetails"
-                                                                          rows="3" placeholder="Say mor"></textarea>
+                                                                          rows="3"
+                                                                          placeholder="Say More ..."></textarea>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Select Users
@@ -547,36 +549,39 @@
                 text: "Are You Sure ?",
                 icon: "error",
                 buttonsStyling: false,
-                confirmButtonText: "Ok!",
+                confirmButtonText: "Yes !",
                 customClass: {
                     confirmButton: "btn font-weight-bold btn-light-primary"
                 }
-            }).then(function () {
-                let url = $div.attr('id');
+            }).then(function (result) {
+                if (result.isConfirmed) {
 
-                $.ajax(`/boards/${url}`, {
-                    headers: {"X-CSRFToken": $(`{% csrf_token %}`).val()},
-                    type: "POST",
-                    success: (data) => {
-                        window.location.replace('/')
-                    },
-                    error: function (data) {
-                        $('[data-switch=true]').bootstrapSwitch();
-                        let content = {};
-                        content.message = data.responseJSON.error;
-                        $.notify(content, {
-                            type: 'danger',
-                            placement: {
-                                from: 'top',
-                                align: 'left'
-                            },
-                            offset: {
-                                x: 30,
-                                y: 30
-                            },
-                        });
-                    }
-                });
+                    let url = $div.attr('id');
+
+                    $.ajax(`/boards/${url}`, {
+                        headers: {"X-CSRFToken": $(`{% csrf_token %}`).val()},
+                        type: "POST",
+                        success: (data) => {
+                            window.location.replace('/')
+                        },
+                        error: function (data) {
+                            $('[data-switch=true]').bootstrapSwitch();
+                            let content = {};
+                            content.message = data.responseJSON.error;
+                            $.notify(content, {
+                                type: 'danger',
+                                placement: {
+                                    from: 'top',
+                                    align: 'left'
+                                },
+                                offset: {
+                                    x: 30,
+                                    y: 30
+                                },
+                            });
+                        }
+                    });
+                }
             });
         });
     </script>

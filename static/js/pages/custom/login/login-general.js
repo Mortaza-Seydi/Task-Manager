@@ -56,10 +56,10 @@ var KTLogin = function () {
             validation.validate().then(function (status) {
                 if (status == 'Valid') {
                     swal.fire({
-                        text: "All is cool! Now you submit this form",
+                        text: "All is cool! Now we submitted Your info to the Server",
                         icon: "success",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok, Do it!",
                         customClass: {
                             confirmButton: "btn font-weight-bold btn-light-primary"
                         }

@@ -132,7 +132,7 @@ var KTFormWidgetsValidation = function () {
                 validator.validate().then(function (status) {
                     if (status == 'Valid') {
                         swal.fire({
-                            text: "All is cool! Now you submit this form",
+                            text: "All is cool! Now we submitted data to the Server",
                             icon: "success",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
