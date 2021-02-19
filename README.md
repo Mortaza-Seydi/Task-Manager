@@ -1,5 +1,5 @@
 # Kanban Task Manager
-## Manage your teams, projects and tasks
+### Manage your teams, projects and tasks
 
 ### How To Run:
 #### This projects use SQLlite database, so you can easily run it on your local machine. do this steps:
