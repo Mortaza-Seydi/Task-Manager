@@ -12,7 +12,7 @@
 
   4- `python manage.py runserver`
 
-# Photos
+# Photos & Features
 
 ### Login
 * You can sign in or sign up 
